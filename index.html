@@ -215,7 +215,7 @@
     <div class="note">
       <p><strong>LƯU Ý:</strong></p>
       <ul>
-        <li>Muốn báo lỗi vui lòng nhập <code>@TÔI</code></li>
+        <li>Muốn báo lỗi vui lòng nhập bấm nút report nhập thông tin bạn muốn báo(Hãy để tên bạn ở cuối)</li>
         <li>Thường hoạt động: 11h50 – 13h00; 17h00 – 20h45</li>
         <li>Thông tin có thể chưa chính xác, vui lòng kiểm tra lại</li>
         <li>Mục đích: tốt cho mọi người → nếu sai sót xin báo lại, không chửi tục</li>
@@ -224,14 +224,14 @@
     </div>
 
     <div class="changelog">
-      <strong>Changelog (V1.9):</strong>
+      <strong>Changelog (V1.9.1):</strong>
       <ul>
         <li>Cập nhật môn Âm nhạc</li>
         <li>Cập nhật môn Lịch sử</li>
         <li>Cập nhật môn Toán [Số]</li>
         <li>Cập nhật môn Tin học</li>
         <li>Cập nhật môn Anh</li>
-        <li>Chuyển xang trang web dễ nhìn, dùng hơn</li>
+        <li>Cập nhật nút Report</li>
       </ul>
     </div>
 
@@ -240,6 +240,47 @@
       <p>— HẾT —</p>
     </div>
   </div>
+<!-- 🚨 Nút Report -->
+<button id="reportBtn" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+">🚨 Report</button>
+
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbw5sjUwJfwRtKBQQu5FgYrmgSjoQ22vvnmlv99H7YJHTVgVZRXm1vWB7fFJg8B2O2M7/exec"; // 👈 dán link API Google Apps Script vào đây
+
+  document.getElementById("reportBtn").addEventListener("click", async () => {
+    const msg = prompt("❗ Nhập lỗi bạn muốn báo:");
+    if (msg && msg.trim() !== "") {
+      await fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({ text: msg })
+      });
+      alert("✅ Đã gửi báo lỗi, cảm ơn bạn!");
+    } else {
+      alert("⚠️ Bạn chưa nhập nội dung!");
+    }
+  });
+
+  // 👉 Hàm xem danh sách báo lỗi (in ra Console)
+  async function showReports() {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    console.log("📋 Danh sách báo lỗi:");
+    data.forEach((r, i) => {
+      console.log(`${i+1}. [${r.time}] ${r.text}`);
+    });
+  }
+</script>
 
   <script>
     const btn = document.getElementById("toggleMode");
