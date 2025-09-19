@@ -120,9 +120,97 @@
     #toggleMode:hover {
       background: #004c99;
     }
+    /* 🎓 Style cho TKB */
+#tkbContainer {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#tkbContainer h2 {
+  color: #0066cc;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#tkbContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#tkbContainer th, 
+#tkbContainer td {
+  border: 1px solid #ddd;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+#tkbContainer th {
+  background: #f0f8ff;
+  color: #0066cc;
+}
+
+#tkbContainer tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* 🌙 Dark mode cho TKB */
+body.dark #tkbContainer {
+  background: #1e1e1e;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.1);
+}
+
+body.dark #tkbContainer h2 {
+  color: #66b2ff;
+}
+
+body.dark #tkbContainer th {
+  background: #1e2a38;
+  color: #66b2ff;
+}
+
+body.dark #tkbContainer td, 
+body.dark #tkbContainer tr:nth-child(even) {
+  background: #2a2a2a;
+  border-color: #444;
+}
+#showFullBtn {
+  background: #0066cc;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s;
+}
+#showFullBtn:hover {
+  background: #004c99;
+}
+
+body.dark #showFullBtn {
+  background: #3399ff;
+}
+body.dark #showFullBtn:hover {
+  background: #1a75ff;
+}
   </style>
 </head>
 <body>
+  <!-- Thời khóa biểu -->
+<div id="tkbContainer">
+  <h2>📅 Thời khóa biểu ngày mai</h2>
+  <div id="todayTKB">Đang tải...</div>
+  <button id="showFullBtn">📖 Xem toàn bộ TKB</button>
+  <div id="fullTKB" style="display:none; margin-top:12px;"></div>
+</div>
   <button id="toggleMode">🌙 Dark Mode</button>
   <div class="container">
     <h1>📢 Thông báo BTVN [NEW 12:00 - 19/9/2025]</h1>
@@ -222,13 +310,14 @@
     </div>
 
     <div class="changelog">
-      <strong>Changelog (V2.0):</strong>
+      <strong>Changelog (V2.1):</strong>
       <ul>
         <li>Cập nhật môn Công dân</li>
         <li>Cập nhật môn HĐTN,HN</li>
         <li>Cập nhật môn Toán [Hình]</li>
         <li>Cập nhật môn Văn</li>
         <li>Cập nhật môn Anh</li>
+        <li>Cập nhật Thời khóa biểu</li>
       </ul>
     </div>
 
@@ -300,5 +389,79 @@
       }
     });
   </script>
+<script>
+(function(){
+  // ====== THỜI KHÓA BIỂU (sửa theo lớp bạn) ======
+  const TKB = {
+    0: ["Chủ nhật: Nghỉ / Tự học"],
+    1: ["HĐTN,HN", "LS&ĐL - Sử", "Anh", "LS&ĐL - Địa", "Toán - Số"],
+    2: ["Văn", "Anh", "Công nghệ", "HĐTN,HN", "GDTC"],
+    3: ["Văn", "Toán - Hình", "KHTN - Lý", "NT - Mĩ thuật", "KHTN - Sinh"],
+    4: ["Toán - Số", "Tin", "LS&ĐL - Sử", "Âm nhạc", "Anh"],
+    5: ["GDĐP", "Văn", "HĐTN,HN", "Toán", "Công dân"],
+    6: ["KHTN - Sinh", "GDTC", "Văn", "KHTN - Hóa", "Nghỉ"]
+  };
+
+  const dayNames = {
+    0: "Chủ Nhật",
+    1: "Thứ Hai",
+    2: "Thứ Ba",
+    3: "Thứ Tư",
+    4: "Thứ Năm",
+    5: "Thứ Sáu",
+    6: "Thứ Bảy"
+  };
+
+  // Lấy ngày hôm nay theo giờ VN
+  const today = new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" });
+  const d = new Date(today);
+  const day = d.getDay();
+
+  // Logic: Nếu hôm nay Thứ Sáu (5) → hiện TKB Thứ Bảy (6)
+  // Nếu hôm nay CN (0) → hiện TKB CN (0)
+  // Còn lại → hiện TKB ngày mai
+  let showDay;
+  if (day === 5) {
+    showDay = 6;
+  } else if (day === 0) {
+    showDay = 0;
+  } else {
+    showDay = (day + 1) % 7;
+  }
+
+  // Render TKB
+  const container = document.getElementById("todayTKB");
+  let html = `<p>Hôm nay: ${dayNames[day]}, ${d.toLocaleDateString("vi-VN")} — Hiển thị TKB ${dayNames[showDay]}</p>`;
+  html += `<table border="1" cellpadding="6" style="border-collapse:collapse; margin-top:10px;">
+            <tr><th>Tiết</th><th>Môn / Nội dung</th></tr>`;
+  TKB[showDay].forEach((mon, i) => {
+    html += `<tr><td>${i+1}</td><td>${mon}</td></tr>`;
+  });
+  html += `</table>`;
+  container.innerHTML = html;
+
+  // Nút hiện toàn bộ TKB
+  document.getElementById("showFullBtn").addEventListener("click", function(){
+    const full = document.getElementById("fullTKB");
+    if(full.style.display === "none"){
+      let fullHtml = "";
+      for(let k=1;k<=6;k++){
+        fullHtml += `<h3>${dayNames[k]}</h3><table border="1" cellpadding="6" style="border-collapse:collapse; margin-bottom:10px;">
+                      <tr><th>Tiết</th><th>Môn / Nội dung</th></tr>`;
+        TKB[k].forEach((mon,i)=>{
+          fullHtml += `<tr><td>${i+1}</td><td>${mon}</td></tr>`;
+        });
+        fullHtml += `</table>`;
+      }
+      full.innerHTML = fullHtml;
+      full.style.display = "block";
+      this.textContent = "❌ Ẩn toàn bộ TKB";
+    } else {
+      full.style.display = "none";
+      this.textContent = "📅 Xem toàn bộ TKB";
+    }
+  });
+})();
+</script>
 </body>
 </html>
