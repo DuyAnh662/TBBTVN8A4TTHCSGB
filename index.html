@@ -11,7 +11,7 @@
   gtag('config', 'G-D2NN99RH6B');
 </script>
   <meta charset="UTF-8">
-  <title>Bảng Thông Báo BTVN - 19/9/2025</title>
+  <title>Bảng Thông Báo BTVN - 20 và 21/9/2025</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -213,14 +213,14 @@ body.dark #showFullBtn:hover {
 </div>
   <button id="toggleMode">🌙 Dark Mode</button>
   <div class="container">
-    <h1>📢 Thông báo BTVN [NEW 12:00 - 19/9/2025]</h1>
+    <h1>📢 Thông báo BTVN [NEW 1:25 - 20 và 21/9/2025]</h1>
 
-    <h2>📘 Địa</h2>
+    <h2>📘 Địa lí</h2>
     <ul>
       <li>Học hết phần d tiết 3 bài 2 [KTBC]</li>
     </ul>
 
-    <h2>➗ Toán (Kết nối tri thức với cuộc sống)</h2>
+    <h2>➗ Toán học</h2>
     <strong>Hình:</strong>
     <ul>
       <li>Học định nghĩa về hình thang, hình thang cân(SGK-52; 53)</li>
@@ -231,14 +231,15 @@ body.dark #showFullBtn:hover {
       <li>Học thuộc định nghĩa đa thức thu gọn SGK-12</li>
     </ul>
 
-    <h2>✍ Văn (Kết nối tri thức với cuộc sống)</h2>
+    <h2>✍ Ngữ văn</h2>
     <ul>
-      <li>Trả lời câu hỏi sau: kế sách của vua Quang Trung ra đánh quân Thanh là gì?</li>
+      <li>Viết kết nói với đọc SGK-24</li>
     </ul>
 
-    <h2>🧬 Sinh</h2>
+    <h2>🧬 Sinh học</h2>
     <ul>
-      <li>Hiện chưa rõ</li>
+      <li>Học phần I và II</li>
+      <li>Đọc trước Quá trình tiêu hóa ở người</li>
     </ul>
 
     <h2>🏠 GDĐP</h2>
@@ -266,12 +267,12 @@ body.dark #showFullBtn:hover {
       <li>Vẽ xong bài cô đã cho trên lớp</li>
     </ul>
 
-    <h2>⚗ Hóa</h2>
+    <h2>⚗ Hóa học</h2>
     <ul>
-      <li>Học hết tiết 1</li>
+      <li>Hiện chưa rõ</li>
     </ul>
 
-    <h2>Tiếng Anh</h2>
+    <h2>Tiếng Anh (Global success)</h2>
     <ul>
       <li>Làm hết Unit 1 trong SHS trang 14-15</li>
     </ul>
@@ -287,7 +288,7 @@ body.dark #showFullBtn:hover {
       <li>Chưa có bài</li>
     </ul>
 
-    <h2>🎶 Âm nhạc</h2>
+    <h2>🎶 Âm nhạc (Cánh diều)</h2>
     <ul>
       <li>Học bài hát bài "khúc ca bốn mùa"</li>
     </ul>
@@ -306,17 +307,17 @@ body.dark #showFullBtn:hover {
         <li>Thông tin có thể chưa chính xác, vui lòng kiểm tra lại</li>
         <li>Mục đích: tốt cho mọi người → nếu sai sót xin báo lại, không chửi tục</li>
         <li>Bạn đọc hay không là quyền của bạn, không vừa ý vui lòng tìm nguồn khác</li>
+        <li>Sách không ghi cách diều hay kết nối chi thức thì nặc định nó là kết nối chi thức</li>
       </ul>
     </div>
 
     <div class="changelog">
-      <strong>Changelog (V2.1.1):</strong>
+      <strong>Changelog (V2.2):</strong>
       <ul>
-        <li>Cập nhật môn Công dân</li>
-        <li>Cập nhật môn HĐTN,HN</li>
-        <li>Cập nhật môn Toán [Hình]</li>
-        <li>Cập nhật môn Văn</li>
-        <li>Cập nhật Thời khóa biểu</li>
+        <li>Cập nhật môn Hóa học</li>
+        <li>Cập nhật Sinh học</li>
+        <li>Cập nhật môn Ngữ văn</li>
+        <li>Sửa một vài thứ khác</li>
       </ul>
     </div>
 
@@ -344,13 +345,13 @@ body.dark #showFullBtn:hover {
   const API_URL = "https://script.google.com/macros/s/AKfycbw5sjUwJfwRtKBQQu5FgYrmgSjoQ22vvnmlv99H7YJHTVgVZRXm1vWB7fFJg8B2O2M7/exec"; // 👈 dán link API Google Apps Script vào đây
 
   document.getElementById("reportBtn").addEventListener("click", async () => {
-    const msg = prompt("❗ Nhập lỗi bạn muốn báo:");
+    const msg = prompt("❗ Nhập lỗi(góp ý) bạn muốn báo:");
     if (msg && msg.trim() !== "") {
       await fetch(API_URL, {
         method: "POST",
         body: JSON.stringify({ text: msg })
       });
-      alert("✅ Đã gửi báo lỗi, cảm ơn bạn!");
+      alert("✅ Đã gửi báo lỗi(góp ý), cảm ơn bạn!");
     } else {
       alert("⚠️ Bạn chưa nhập nội dung!");
     }
