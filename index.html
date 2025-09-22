@@ -11,7 +11,7 @@
   gtag('config', 'G-D2NN99RH6B');
 </script>
   <meta charset="UTF-8">
-  <title>Bảng Thông Báo BTVN - 20 và 21/9/2025</title>
+  <title>Bảng Thông Báo BTVN - 22/9/2025</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -213,11 +213,11 @@ body.dark #showFullBtn:hover {
 </div>
   <button id="toggleMode">🌙 Dark Mode</button>
   <div class="container">
-    <h1>📢 Thông báo BTVN [NEW 1:25 - 20 và 21/9/2025]</h1>
+    <h1>📢 Thông báo BTVN [NEW 12:30 - 22/9/2025]</h1>
 
     <h2>📘 Địa lí</h2>
     <ul>
-      <li>Học hết phần d tiết 3 bài 2 [KTBC]</li>
+      <li>Tìm hiểu dạng địa hình Các-xtơ và học thuộc(Chưa rõ là có cần học thuộc không!)</li>
     </ul>
 
     <h2>➗ Toán học</h2>
@@ -227,8 +227,8 @@ body.dark #showFullBtn:hover {
     </ul>
     <strong>Số:</strong>
     <ul>
-      <li>1.10 đến 1.13 Sách toán tập 1 [trang 14]</li>
-      <li>Học thuộc định nghĩa đa thức thu gọn SGK-12</li>
+      <li>1.14 đến 1.17 Sách toán tập 1 [trang 16]</li>
+      <li>Học thuộc quy tắc cộng, trừ đa thức [SGK-15]</li>
     </ul>
 
     <h2>✍ Ngữ văn</h2>
@@ -249,7 +249,7 @@ body.dark #showFullBtn:hover {
 
     <h2>📜 Lịch sử</h2>
     <ul>
-      <li>Học hết tiết 3+4 phần 1 (Hiện hưa rõ)</li>
+      <li>Làm bài 1 phần Luyện tập và vận dụng[SGK-14]. Lưu ý nhỏ: làm ra vở cương!</li>
     </ul>
 
     <h2>🔬 Vật lý</h2>
@@ -274,7 +274,7 @@ body.dark #showFullBtn:hover {
 
     <h2>Tiếng Anh (Global success)</h2>
     <ul>
-      <li>Làm hết Unit 1 trong SHS trang 14-15</li>
+      <li>Viết 12 từ mới mỗi từ 20 lần mỗi dòng hai lần</li>
     </ul>
 
     <h2>👥 Công dân</h2>
@@ -312,17 +312,17 @@ body.dark #showFullBtn:hover {
     </div>
 
     <div class="changelog">
-      <strong>Changelog (V2.2):</strong>
+      <strong>Changelog (V2.3):</strong>
       <ul>
-        <li>Cập nhật môn Hóa học</li>
-        <li>Cập nhật Sinh học</li>
-        <li>Cập nhật môn Ngữ văn</li>
-        <li>Sửa một vài thứ khác</li>
+        <li>Cập nhật môn Toán học[Số]</li>
+        <li>Cập nhật Lịch sử</li>
+        <li>Cập nhật môn Địa lí</li>
+        <li>Cập nhật môn Tiếng Anh</li>
       </ul>
     </div>
 
     <div class="footer">
-      <p>By ChatGBT[Web] and Vũ Duy Anh</p>
+      <p>By ChatGBT[Web], Vũ Duy Anh và Nguyễn văn Hoàng Bách</p>
       <p>— HẾT —</p>
     </div>
   </div>
@@ -412,26 +412,31 @@ body.dark #showFullBtn:hover {
     6: "Thứ Bảy"
   };
 
-  // Lấy ngày hôm nay theo giờ VN
-  const today = new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" });
-  const d = new Date(today);
-  const day = d.getDay();
+  // Lấy ngày và giờ theo VN
+  const now = new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" });
+  const d = new Date(now);
+  let day = d.getDay();
+  let hour = d.getHours();
 
-  // Logic: Nếu hôm nay Thứ Sáu (5) → hiện TKB Thứ Bảy (6)
-  // Nếu hôm nay CN (0) → hiện TKB CN (0)
-  // Còn lại → hiện TKB ngày mai
+  // Nếu trước 7h sáng thì coi như ngày hôm trước
+  if (hour < 7) {
+    day = (day - 1 + 7) % 7; 
+  }
+
+  // Logic chọn ngày hiển thị
   let showDay;
-  if (day === 5) {
+  if (day === 5) {          // Thứ Sáu → hiển thị TKB Thứ Bảy
     showDay = 6;
-  } else if (day === 0) {
-    showDay = 0;
-  } else {
+  } else if (day === 0) {   // Chủ Nhật → hiển thị TKB Thứ Hai
+    showDay = 1;
+  } else {                  // Các ngày khác → hiển thị ngày mai
     showDay = (day + 1) % 7;
   }
 
   // Render TKB
   const container = document.getElementById("todayTKB");
-  let html = `<p>Hôm nay: ${dayNames[day]}, ${d.toLocaleDateString("vi-VN")} — Hiển thị TKB ${dayNames[showDay]}</p>`;
+  let html = `<p>Hôm nay: ${dayNames[day]}, ${d.toLocaleDateString("vi-VN")} — Hiển thị TKB ${dayNames[showDay]}</p>
+  ❗Lưu ý nhỏ: Sau 7 giờ sáng thời khóa biểu sẽ đổi`;
   html += `<table border="1" cellpadding="6" style="border-collapse:collapse; margin-top:10px;">
             <tr><th>Tiết</th><th>Môn / Nội dung</th></tr>`;
   TKB[showDay].forEach((mon, i) => {
