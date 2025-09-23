@@ -11,7 +11,7 @@
   gtag('config', 'G-92KE83JEYM');
 </script>
   <meta charset="utf-8" />
-  <title>Bảng Thông Báo BTVN - 22/9/2025</title>
+  <title>Bảng Thông Báo BTVN - 23/9/2025</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     :root {
@@ -301,7 +301,7 @@ body.dark .changelog li {
   <div class="wrap">
     <!-- BTVN -->
     <div class="card">
-      <h1>📢 Thông báo BTVN [NEW 02:00 - 22/9/2025]</h1>
+      <h1>📢 Thông báo BTVN [NEW 12:30 - 23/9/2025]</h1>
 
       <h2>📘 Địa lí</h2>
       <ul><li>Tìm hiểu dạng địa hình Các-xtơ và học thuộc</li></ul>
@@ -316,7 +316,7 @@ body.dark .changelog li {
       </ul>
 
       <h2>✍ Ngữ văn</h2>
-      <ul><li>Viết kết nối với đọc SGK-24</li></ul>
+      <ul><li>Làm hết bài THTV(SGK-24; 25)[Nếu trên lớp chưa làm]</li><li>Đọc, soạn bài "Ta đi tới"(SGK-25>28)</ul>
 
       <h2>🧬 Sinh học</h2>
       <ul><li>Học phần I và II</li><li>Đọc trước Quá trình tiêu hóa</li></ul>
@@ -325,7 +325,7 @@ body.dark .changelog li {
       <ul><li>Chưa có bài</li></ul>
 
       <h2>📜 Lịch sử</h2>
-      <ul><li>Làm bài 1 phần Luyện tập và vận dụng [SGK-14]. Lưu ý nhỏ: làm ra vở cương!</li></ul>
+      <ul><li>Làm bài 1 phần Luyện tập và vận dụng [SGK-14]. Lưu ý nhỏ: làm ra vở cương!</li><li>Học thuộc bảng ở phần 1 Cách mạng tư sản Anh</li></ul>
 
       <h2>🔬 Vật lý</h2>
       <ul><li>Học công thức, khái niệm về trọng lượng riêng</li></ul>
@@ -367,18 +367,11 @@ body.dark .changelog li {
       </div>
 
       <div class="changelog" style="margin-top:14px;">
-        <strong>Changelog (V2.3.7)</strong>
+        <strong>Changelog (V2.4)</strong>
         <ul>
-          <li>Cập nhật Toán học [Số]</li>
+          <li>Cập nhật Ngữ văn</li>
+          <li>Cập nhật Tiếng anh</li>
           <li>Cập nhật Lịch sử</li>
-          <li>Cập nhật Địa lí</li>
-          <li>Cập nhật Tiếng Anh</li>
-          <li>Thêm thông báo lịch trực [Beta]</li>
-          <li>Thêm 07:00 TKB và LT mới đổi</li>
-          <li>Sửa vài thứ khác</li>
-          <li>Sửa đổi giao diện gọn hơn cho web PC</li>
-          <li>Sửa đổi lịch trực nhật và TKB sẽ ở dưới cùng khi dùng điện thoại</li>
-          <li>Sửa đổi vị trí các nút</li>
         </ul>
       </div>
     </div>
@@ -591,23 +584,6 @@ if (reportFixed) {
       full.innerHTML = html;
       full.style.display = 'block';
       this.textContent = '❌ Ẩn toàn bộ';
-
-      // make editable spans clickable -> prompt edit
-      full.querySelectorAll('.editable-truc').forEach(el=>{
-        el.style.cursor = 'pointer';
-        el.addEventListener('click', ()=>{
-          const day = el.dataset.day;
-          const val = prompt("Sửa lịch trực cho " + dayNames[day], truc[day]);
-          if (val !== null){
-            truc[day] = val;
-            localStorage.setItem('lichTruc', JSON.stringify(truc));
-            // cập nhật UI (cả phần full và today)
-            el.textContent = val;
-            renderTodayTKB();
-          }
-        });
-      });
-
       // save buttons
       full.querySelectorAll('.save-truc').forEach(btn=>{
         btn.addEventListener('click', ()=>{
