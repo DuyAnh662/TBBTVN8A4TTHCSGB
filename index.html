@@ -285,6 +285,118 @@ body.dark .changelog li {
 body.dark .menu-panel a.donate-btn:hover {
   background: rgba(255,255,255,.08);
 }
+/* Popup đẹp hơn */
+.popup-card {
+  width: 420px;
+  max-width: calc(100% - 40px);
+  background: var(--card);
+  color: var(--text);
+  padding: 22px 20px;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.4);
+  position: relative;
+  border-top: 6px solid var(--accent);
+  animation: popupIn .3s ease;
+}
+
+/* hiệu ứng mở */
+@keyframes popupIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-card h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.popup-card h3::before {
+  content: "⚠️";
+}
+
+.popup-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.popup-card li {
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+.popup-card li strong {
+  color: var(--accent);
+}
+
+.popup-card .close {
+  position: absolute;
+  right: 12px; 
+  top: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: .75;
+  transition: .2s;
+}
+.popup-card .close:hover { opacity: 1; transform: scale(1.1); }
+
+.popup-card .footer-check {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  opacity: .85;
+}
+/* Popup 3D đẹp hơn */
+.popup-card {
+  width: 420px;
+  max-width: calc(100% - 40px);
+  background: var(--card);
+  color: var(--text);
+  padding: 22px 20px;
+  border-radius: 14px;
+
+  /* Hiệu ứng 3D bằng nhiều lớp shadow */
+  box-shadow:
+    0 15px 25px rgba(0,0,0,0.35),
+    0 5px 10px rgba(0,0,0,0.2),
+    inset 0 1px 2px rgba(255,255,255,0.15);
+
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-top: 6px solid var(--accent);
+
+  /* Gradient nhẹ để có cảm giác nổi */
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.03),
+    rgba(0,0,0,0.15)
+  ), var(--card);
+
+  animation: popupIn .35s ease;
+  transform: translateY(0) scale(1);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+/* Hover rung động nhẹ */
+.popup-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 18px 30px rgba(0,0,0,0.4),
+    0 8px 15px rgba(0,0,0,0.25),
+    inset 0 1px 2px rgba(255,255,255,0.1);
+}
+
+@keyframes popupIn {
+  from { transform: translateY(-20px) scale(.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
   </style>
 </head>
 <body>
@@ -304,8 +416,9 @@ body.dark .menu-panel a.donate-btn:hover {
     <div class="popup-card" id="popupCard">
       <div class="close" id="popupClose" title="Đóng">✕</div>
       <h3>❗Lưu ý</h3>
-      <p id="popupText">Được làm ra và phát triển bởi ChatGBT(Web), Vũ Duy Anh và Nguyễn Văn Hoàng Bách</p>
-      <p id="popupText">Trang web hiện đang trong giai đoạn phát triển Beta sẽ rất dễ để lại sai sót</p>
+      <p id="popupText">+Được làm ra và phát triển bởi ChatGBT(Web), Vũ Duy Anh và Nguyễn Văn Hoàng Bách</p>
+      <p id="popupText">+Trang web hiện đang trong giai đoạn phát triển Beta sẽ rất dễ để lại sai sót</p>
+      <p id="popupText">+Donate chúng toi nhé!^_^</p>
       <p style="margin-top:12px; text-align:left;">
         <label><input type="checkbox" id="dontShowToday"/> Không hiển thị lại hôm nay</label>
       </p>
@@ -382,13 +495,14 @@ body.dark .menu-panel a.donate-btn:hover {
       </div>
 
       <div class="changelog" style="margin-top:14px;">
-        <strong>Changelog (V2.5)</strong>
+        <strong>Changelog (V2.5.1)</strong>
         <ul>
           <li>Cập nhật Ngữ văn</li>
           <li>Cập nhật Toán học (Hình học)</li>
           <li>Cập nhật Sinh học</li>
           <li>Cập nhật Vật lý</li>
           <li>Thêm donate</li>
+          <li>Sửa một vài thứ khác</li>
         </ul>
       </div>
     </div>
