@@ -29,14 +29,32 @@
     margin:10px 0;
     color:#fbbf24;
   }
+  .btn {
+    margin-top:20px;
+    padding:10px 20px;
+    background:#38bdf8;
+    color:#0f172a;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+  }
+  .btn:hover {
+    background:#0ea5e9;
+    transform:scale(1.05);
+  }
 </style>
 </head>
 <body>
   <div class="box">
     <h1>💖 Cảm ơn bạn vô ^_^</h1>
-    <h1>Đừng ngại cho tui một gói mì nhé!<h1>
+    <h1>Đừng ngại cho tui một gói mì nhé!</h1>
     <p>Trang sẽ tự chuyển hướng sau:</p>
     <div class="count" id="countdown">10</div>
+
+    <!-- Nút quay lại trang chính -->
+    <button class="btn" onclick="goHome()">⬅️ Quay lại trang chính</button>
   </div>
 
 <script>
@@ -44,7 +62,7 @@
   let time = 10;
 
   // URL cố định muốn chuyển đến
-  const targetUrl = "https://lootdest.org/s?mz2giM7j"; 
+  const targetUrl = "https://loot-link.com/s?haqqvDxQ"; 
 
   const countdownEl = document.getElementById("countdown");
   countdownEl.textContent = time;
@@ -57,7 +75,11 @@
       window.location.href = targetUrl; // chuyển hướng
     }
   },1000);
+
+  // hàm quay lại trang chính
+  function goHome(){
+    window.location.href = "index.html"; // sửa thành link trang chính của bạn
+  }
 </script>
 </body>
 </html>
-
