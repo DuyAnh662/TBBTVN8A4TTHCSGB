@@ -486,6 +486,31 @@
                 opacity: 1;
             }
         }
+
+/* Nút Report trong menu */
+.report-link {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #ff4d4d, #ff1a1a);
+  text-decoration: none;
+  transition: all 0.25s ease;
+  position: relative;   /* Cho phép nổi */
+  z-index: 10;          /* Đè lên khung menu */
+}
+
+/* Hover: sáng hơn + nhấc lên */
+.report-link:hover {
+  background: linear-gradient(135deg, #ff6666, #ff3333);
+  box-shadow: 0 6px 15px rgba(255, 50, 50, 0.6);
+}
+
+/* Dark mode */
+body.dark .report-link {
+  background: linear-gradient(135deg, #ff3333, #cc0000);
+}
     </style>
 </head>
 
@@ -495,9 +520,9 @@
         <button class="menu-btn" id="menuBtn">☰ Menu</button>
         <div class="menu-panel" id="menuPanel" role="menu" aria-hidden="true">
             <button id="menuDark">🌙 Chuyển Dark/Light</button>
-            <button id="menuReport">🚨 Report</button>
             <button id="menuPopup">❗Bật lại Lưu ý</button>
             <a href="Donate.html" target="_blank" class="donate-btn">❤️ Donate to us</a>
+            <a href="Report.html" class="report-link">🚨 Report</a>
         </div>
     </div>
 
@@ -707,37 +732,6 @@
         // Report from menu & fixed button
         const menuReport = document.getElementById('menuReport');
         const reportFixed = document.getElementById('reportFixed');
-
-        async function doReport() {
-            const txt = prompt("❗Nhập nội dung báo lỗi / góp ý:");
-            if (!txt || !txt.trim()) {
-                alert("⚠️ Bạn chưa nhập nội dung.");
-                return;
-            }
-            try {
-                // gửi lên API nếu bạn có deploy; nếu không có thì thử-catch vẫn ok
-                await fetch(API_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        text: txt
-                    })
-                });
-                alert("✅ Đã gửi. Cảm ơn bạn!");
-            } catch (e) {
-                console.warn('Report failed (demo):', e);
-                alert("✅ (Demo) Đã ghi nhận: " + txt);
-            }
-        }
-        menuReport.addEventListener('click', doReport);
-        if (reportFixed) {
-            reportFixed.addEventListener('click', doReport);
-        }
-        // Show popup from menu
-        document.getElementById('menuPopup').addEventListener('click', () => {
-            openPopup(true);
-            menuPanel.style.display = 'none';
-        });
-
         /* -------------------------
            Popup logic (1 lần/ngày + "Không hiện hôm nay")
            ------------------------- */
