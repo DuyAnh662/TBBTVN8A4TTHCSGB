@@ -12,9 +12,9 @@
         /* 2. BIẾN MÀU SẮC & THIẾT LẬP GLASSMOPRHISM */
         :root {
             --font-main: 'Inter', sans-serif;
-            --primary: #007bff; /* Xanh dương chủ đạo */
+            --primary: #007bff;
             --primary-dark: #0056b3;
-            --success: #28a745; /* Xanh lá cho góp ý */
+            --success: #28a745;
             --success-dark: #1e7e34;
             --error: #dc3545;
             --neutral: #6c757d;
@@ -26,7 +26,7 @@
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             
             /* Text & Background */
-            --bg-start: #6dd5ed; /* Màu nền đẹp để làm nổi bật Glass */
+            --bg-start: #6dd5ed;
             --bg-end: #2193b0;
             --text-color: #212529;
             --input-bg: rgba(255, 255, 255, 0.3);
@@ -118,44 +118,74 @@
             box-shadow: 0 0 0 3px var(--primary);
         }
 
-        /* 7. BUTTONS (Giữ màu đặc để dễ nhìn) */
+        /* 7. BUTTONS (Thiết kế lại theo Liquid Glass Style, Viền trắng) */
         button {
             width: 100%;
             padding: 15px;
-            border: none;
+            border: none; 
             border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             margin-top: 10px;
-            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng nảy */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             letter-spacing: 0.5px;
-            color: white; /* Tất cả nút đều màu trắng */
+
+            /* Base Liquid Glass Effect cho nút */
+            background: rgba(255, 255, 255, 0.15); /* Background mờ */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-color); /* Màu chữ thích ứng với theme */
+            /* >>> THAY ĐỔI: Viền trắng cho tất cả nút <<< */
+            border: 2px solid rgba(255, 255, 255, 0.7); 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Bóng mờ */
         }
-        
-        .send-btn { background: var(--primary); }
+
+        body.dark button {
+            background: rgba(0, 0, 0, 0.25);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Nút Report Lỗi (Primary/Blue) */
+        .send-btn { 
+            /* Bỏ border-color */
+            color: var(--primary-dark); /* Màu chữ đậm hơn để nổi bật */
+        }
         .send-btn:hover { 
-            background: var(--primary-dark); 
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.4);
+            background: rgba(0, 123, 255, 0.2); /* Thêm màu nhẹ khi hover */
+            color: var(--primary-dark);
+            transform: translateY(-4px) scale(1.02);
+            /* Hiệu ứng Glow/Liquid mạnh hơn */
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.8), 
+                        0 0 0 4px rgba(0, 123, 255, 0.3);
         }
-        
-        .feedback-btn { background: var(--success); }
+
+        /* Nút Góp ý / Đề xuất (Success/Green) */
+        .feedback-btn { 
+            /* Bỏ border-color */
+            color: var(--success-dark);
+        }
         .feedback-btn:hover { 
-            background: var(--success-dark); 
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 15px rgba(40, 167, 69, 0.4);
+            background: rgba(40, 167, 69, 0.2);
+            color: var(--success-dark);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.8),
+                        0 0 0 4px rgba(40, 167, 69, 0.3);
         }
-        
+
+        /* Nút Quay lại (Neutral/Gray) */
         .back-btn { 
-            background: var(--neutral); 
-            box-shadow: none !important;
+            /* Bỏ border-color */
+            color: var(--neutral-dark);
             font-weight: 500;
         }
         .back-btn:hover { 
-            background: var(--neutral-dark); 
-            transform: none; 
+            background: rgba(108, 117, 125, 0.2);
+            color: var(--neutral-dark);
+            transform: translateY(0) scale(1.01); /* Hiệu ứng nhẹ hơn */
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
         }
+        /* Hết phần Liquid Glass Buttons */
 
         /* 8. TOGGLE BUTTON */
         .top-bar {
@@ -164,6 +194,7 @@
             right: 20px;
         }
         .toggle-btn {
+            /* Giữ nguyên vì là nút phụ */
             background: var(--toggle-bg);
             color: var(--text-color);
             padding: 8px 15px;
@@ -175,6 +206,7 @@
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.5);
             font-weight: 500;
+            backdrop-filter: none; /* Bỏ blur trên nút này */
         }
         .toggle-btn:hover { 
             opacity: 0.9; 
@@ -194,7 +226,7 @@
             z-index: 9999;
         }
         .modal-content {
-            background: var(--text-color); /* Dùng màu chữ để nổi bật */
+            background: var(--text-color);
             padding: 30px;
             border-radius: 16px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.5);
