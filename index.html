@@ -1438,7 +1438,7 @@
         </ul>
       </div>
       <div class="changelog animate-item" style="margin-top:14px;">
-        <strong>Changelog (V2.9)</strong>
+        <strong>Changelog (V2.9.1)</strong>
         <ul>
           <li>Cập nhật Sinh học</li>
           <li>Cập nhật Hóa học</li>
@@ -1468,12 +1468,12 @@
   
           const TKB = {
               0: ["Chủ nhật: Nghỉ / Tự học"],
-              1: ["HĐTN,HN(CC)", "LS&ĐL - lịch sử", "Tiếng anh", "LS&ĐL - Địa lí", "Toán học - đại số"],
-              2: ["Ngữ văn", "Tiếng anh", "Công nghệ", "HĐTN,HN", "GDTC"],
-              3: ["Ngữ văn", "Toán học - hình học", "KHTN - Vật lý", "NT - Mĩ thuật", "KHTN - Sinh học"],
-              4: ["Toán học - đại Số", "Tin học", "LS&ĐL - lịch sử", "Âm nhạc", "Tiếng anh"],
-              5: ["GDĐP", "Ngữ văn", "HĐTN,HN", "Toán học - hình học", "Giáo dục công dân"],
-              6: ["KHTN - Sinh học", "GDTC", "Ngữ văn", "KHTN - Hóa học", "Nghỉ"]
+              1: ["HĐTN,HN(Chào cờ)", "LS&ĐL - Lịch sử", "Tiếng anh", "LS&ĐL - Địa lí", "Toán học - Đại số"],
+              2: ["Ngữ văn", "Tiếng anh", "Công nghệ", "HĐTN,HN", "Giáo dục thể chất"],
+              3: ["Ngữ văn", "Toán học - Hình học", "KHTN - Vật lý", "NT - Mĩ thuật", "KHTN - Sinh học"],
+              4: ["Toán học - Đại Số", "Tin học", "LS&ĐL - Lịch sử", "Âm nhạc", "Tiếng anh"],
+              5: ["Giáo dục địa phương", "Ngữ văn", "HĐTN,HN", "Toán học - Hình học", "Giáo dục công dân"],
+              6: ["KHTN - Sinh học", "Giáo dục thể chất", "Ngữ văn", "KHTN - Hóa học", "Nghỉ"]
           };
   
           // Lịch trực (có lưu localStorage nếu user chỉnh)
@@ -1630,10 +1630,10 @@
               // Áp dụng liquid/normal mode
               if (localStorage.getItem('liquidMode') === 'normal') {
                   document.body.classList.add('normal-mode');
-                  menuLiquid.textContent = '✨ Chuyển Liquid Glass/Thường';
+                  menuLiquid.textContent = '✨ Đang hiển thị giao diện thường';
               } else {
                   document.body.classList.remove('normal-mode');
-                  menuLiquid.textContent = '✨ Chuyển Giao diện thường/Liquid';
+                  menuLiquid.textContent = '✨ Đang hiển thị Liquid Glass';
               }
           }
           
