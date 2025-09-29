@@ -15,7 +15,7 @@
           gtag('config', 'G-92KE83JEYM');
   </script>
   <meta charset="utf-8" />
-  <title>Bảng Thông Báo BTVN - 28/9/2025</title>
+  <title>Bảng Thông Báo BTVN - 29/9/2025</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
   :root {
@@ -189,6 +189,14 @@
               background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
               z-index: -1;
               pointer-events: none;
+          }
+          
+          /* Ngăn scroll trang khi popup mở */
+          body.popup-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
           }
           
           /* dark */
@@ -456,7 +464,7 @@
           
           .popup-card {
               width: 420px;
-              max-width: 100%;
+              max-width: 95%;
               background: var(--glass-bg);
               backdrop-filter: blur(20px);
               -webkit-backdrop-filter: blur(20px);
@@ -468,6 +476,41 @@
               border: 1px solid var(--glass-border);
               animation: popupIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
               transform-origin: center;
+              max-height: 80vh;
+              overflow-y: auto !important;
+              -webkit-overflow-scrolling: touch !important;
+          }
+          
+          /* Tùy chỉnh thanh cuộn cho popup-card */
+          .popup-card::-webkit-scrollbar {
+              width: 6px;
+          }
+
+          .popup-card::-webkit-scrollbar-track {
+              background: rgba(0, 0, 0, 0.1);
+              border-radius: 10px;
+          }
+
+          .popup-card::-webkit-scrollbar-thumb {
+              background: rgba(0, 0, 0, 0.3);
+              border-radius: 10px;
+          }
+
+          .popup-card::-webkit-scrollbar-thumb:hover {
+              background: rgba(0, 0, 0, 0.5);
+          }
+
+          /* Dark mode scrollbar */
+          body.dark .popup-card::-webkit-scrollbar-track {
+              background: rgba(255, 255, 255, 0.1);
+          }
+
+          body.dark .popup-card::-webkit-scrollbar-thumb {
+              background: rgba(255, 255, 255, 0.3);
+          }
+
+          body.dark .popup-card::-webkit-scrollbar-thumb:hover {
+              background: rgba(255, 255, 255, 0.5);
           }
           
           @keyframes popupIn {
@@ -1246,6 +1289,160 @@
               transform: translateY(0);
             }
           }
+          
+          /* Thêm media query cho thiết bị di động */
+          @media (max-width: 768px) {
+              /* Tối ưu hóa popup và nút đóng */
+              .popup-card {
+                  width: 95% !important;
+                  max-width: 95% !important;
+                  padding: 20px !important;
+                  margin: 10px !important;
+                  border-radius: 16px !important;
+              }
+              
+              .popup-card .close {
+                  width: 36px !important;
+                  height: 36px !important;
+                  font-size: 22px !important;
+                  top: 12px !important;
+                  right: 12px !important;
+                  z-index: 100 !important;
+                  background: rgba(255, 255, 255, 0.8) !important;
+                  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+              }
+              
+              body.dark .popup-card .close {
+                  background: rgba(0, 0, 0, 0.5) !important;
+              }
+              
+              /* Tối ưu hóa các bảng để ôm sát viền */
+              table {
+                  margin-top: 10px !important;
+                  margin-bottom: 10px !important;
+                  border-radius: 8px !important;
+              }
+              
+              th, td {
+                  padding: 8px 12px !important;
+                  font-size: 14px !important;
+              }
+              
+              /* Tối ưu hóa các card */
+              .card {
+                  padding: 16px !important;
+                  border-radius: 16px !important;
+                  margin-bottom: 16px !important;
+              }
+              
+              /* Tối ưu hóa menu */
+              .menu-panel {
+                  width: 200px !important;
+                  top: 40px !important;
+                  right: 0 !important;
+              }
+              
+              /* Tối ưu hóa tiêu đề */
+              h1 {
+                  font-size: 22px !important;
+                  margin: 4px 0 16px !important;
+              }
+              
+              h2 {
+                  font-size: 18px !important;
+                  margin: 12px 0 !important;
+              }
+              
+              /* Tối ưu hóa nút bấm */
+              #showFullBtn, .menu-btn {
+                  padding: 8px 14px !important;
+                  font-size: 14px !important;
+                  border-radius: 10px !important;
+              }
+              
+              /* Tối ưu hóa các mục danh sách */
+              ul li {
+                  font-size: 14px !important;
+                  margin: 6px 0 !important;
+                  line-height: 1.4 !important;
+              }
+              
+              /* Tối ưu hóa khoảng cách giữa các phần tử */
+              .wrap {
+                  gap: 16px !important;
+                  margin: 60px auto 20px !important;
+                  padding: 0 12px !important;
+              }
+              
+              /* Tối ưu hóa changelog */
+              .changelog {
+                  padding: 12px 16px !important;
+                  margin: 16px 0 !important;
+                  font-size: 14px !important;
+              }
+              
+              /* Tối ưu hóa ghi chú */
+              .note {
+                  padding: 12px 14px !important;
+                  margin-top: 16px !important;
+                  font-size: 14px !important;
+              }
+              
+              /* Tối ưu hóa phần tử chỉnh sửa trực */
+              .editable-truc {
+                  padding: 4px 8px !important;
+                  font-size: 14px !important;
+              }
+              
+              /* Tối ưu hóa nút báo cáo */
+              #reportFixed {
+                  padding: 10px 14px !important;
+                  font-size: 14px !important;
+              }
+              
+              /* Tối ưu hóa popup changelog */
+              .category-title {
+                  font-size: 15px !important;
+              }
+              
+              .change-item {
+                  font-size: 13px !important;
+                  margin-bottom: 4px !important;
+              }
+              
+              /* Tối ưu hóa màu sắc cho dark mode trên di động */
+              body.dark .card {
+                  color: #f0f0f0 !important;
+              }
+              
+              body.dark h2 {
+                  color: #f0f0f0 !important;
+              }
+              
+              body.dark ul li {
+                  color: #e0e0e0 !important;
+              }
+              
+              body.dark .inline-note {
+                  color: #b0b0b0 !important;
+              }
+              
+              body.dark .changelog li {
+                  color: #a0c4ff !important;
+              }
+              
+              body.dark .popup-card {
+                  color: #f0f0f0 !important;
+              }
+              
+              body.dark .menu-panel button {
+                  color: #f0f0f0 !important;
+              }
+              
+              body.dark .menu-panel a.donate-btn {
+                  color: #f0f0f0 !important;
+              }
+          }
   </style>
 </head>
 
@@ -1295,7 +1492,7 @@
       <div class="popup-changelog">
         <div class="changelog-header">
           <span class="changelog-icon">📋</span>
-          <span class="changelog-version">Changelog (V2.9)</span>
+          <span class="changelog-version">Changelog (V2.9.2)</span>
         </div>
         
         <div class="changelog-content">
@@ -1305,10 +1502,11 @@
               <span>Cập nhật môn học</span>
             </div>
             <ul class="change-list">
-              <li class="change-item">Cập nhật Sinh học</li>
-              <li class="change-item">Cập nhật Hóa học</li>
-              <li class="change-item">Cập nhật Ngữ văn</li>
-              <li class="change-item">Cập nhật Lịch trực nhật</li>
+              <li class="change-item">Cập nhật Tiếng Anh</li>
+              <li class="change-item">Cập nhật Lịch sử</li>
+              <li class="change-item">Cập nhật HĐTN,HN</li>
+              <li class="change-item">Cập nhật Toán học - Đại số</li>
+              <li class="change-item">Cập nhật Địa lí</li>
             </ul>
           </div>
           
@@ -1318,8 +1516,7 @@
               <span>Tính năng mới</span>
             </div>
             <ul class="change-list">
-              <li class="change-item">Cập nhật tính năng Liquid Glass</li>
-              <li class="change-item">Nhiều tùy chọn về giao diện</li>
+              <li class="change-item">Chỉnh sửa lại về giao diện</li>
             </ul>
           </div>
           
@@ -1329,7 +1526,7 @@
               <span>Thay đổi lớn</span>
             </div>
             <ul class="change-list">
-              <li class="change-item">Thay đổi giao diện toàn bộ hệ thống!</li>
+              <li class="change-item">Hiện tại không có!</li>
             </ul>
           </div>
           
@@ -1356,10 +1553,11 @@
   <div class="wrap">
     <!-- BTVN -->
     <div class="card liquid-effect">
-      <h1 class="fade-in-text">📢 Thông báo BTVN cho 29/9/2025</h1>
+      <h1 class="fade-in-text">📢 Thông báo BTVN cho 30/9/2025</h1>
       <h2 class="animate-item">📘 Địa lí</h2>
       <ul class="animate-item">
-        <li>Tìm hiểu dạng địa hình Các-xtơ và học thuộc</li>
+        <li>Học thuộc hết tết 5 bài 2</li>
+        <li>Lưu ý nhỏ: Cô có thể gọi hai; người một người vùng trường Sơn Bắc, một người Vùng trường Sơn Nam</li>
       </ul>
       <h2 class="animate-item">➗ Toán học</h2>
       <strong class="animate-item">Hình:</strong>
@@ -1368,7 +1566,7 @@
         <li>Ôn lại bài cũ</ul>
       <strong class="animate-item">Số:</strong>
       <ul class="animate-item">
-        <li>1.18 → 1.23 Sách toán tập 1 [SGK-17; 18]</li>
+        <li>1.24 → 1.25, vận dụng, luyện tập 2 Sách toán tập 1 [SGK-20; 21]</li>
       </ul>
       <h2 class="animate-item">✍ Ngữ văn</h2>
       <ul class="animate-item">
@@ -1385,7 +1583,7 @@
       </ul>
       <h2 class="animate-item">📜 Lịch sử</h2>
       <ul class="animate-item">
-        <li>Hiện không có bài[Chưa rõ]</li>
+        <li>Đọc trước bài chuẩn bị cho dự giờ</li>
       </ul>
       <h2 class="animate-item">🔬 Vật lý</h2>
       <ul class="animate-item">
@@ -1393,8 +1591,8 @@
       </ul>
       <h2 class="animate-item">🤝 HĐTN, HN</h2>
       <ul class="animate-item">
-        <li>Vẽ tranh hoặc làm thơ chủ đề bất kì đối với thơ tranh chủ đề truyền thống trường tốt đẹp[Thứ hai nộp]</li>
-        <li>Lưu ý nhỏ: làm ra giấy</ul>
+        <li>Hiện không có bài</li>
+        <li>Lưu ý nhỏ: Mang cả lịch sử</ul>
       <h2 class="animate-item">🎨 Mĩ thuật</h2>
       <ul class="animate-item">
         <li>Vẽ xong bài cô đã cho</li>
@@ -1405,8 +1603,7 @@
       </ul>
       <h2 class="animate-item">🇬🇧 Tiếng Anh(Global success)</h2>
       <ul class="animate-item">
-        <li>Làm nốt bài 4(Sách trang 22)</li>
-        <li>Ôn lại cách công thức(Bài cũ, cho nhớ)</li>
+        <li>Không có bài!</li>
       </ul>
       <h2 class="animate-item">👥 Công dân</h2>
       <ul class="animate-item">
@@ -1438,16 +1635,13 @@
         </ul>
       </div>
       <div class="changelog animate-item" style="margin-top:14px;">
-        <strong>Changelog (V2.9.1)</strong>
+        <strong>Changelog (V2.9.2)</strong>
         <ul>
-          <li>Cập nhật Sinh học</li>
-          <li>Cập nhật Hóa học</li>
-          <li>Cập nhật Ngữ văn</li>
-          <li>Cập nhật Lịch trực nhật</li>
-          <li>Cập nhật tính năng Liquid Glass</li>
-          <li>Nhiều tùy chọn về giao diện</li>
-          <li>Thay đổi giao diện toàn bộ hệ thống!</li>
-          <li>Sửa đổi một vài thứ khác</li>
+          <li>Cập nhật HĐTN,HN</li>
+          <li>Cập nhật Toán học - Đại số</li>
+          <li>Cập nhật Tiếng Anh</li>
+          <li>Cập nhật Lịch sử</li>
+          <li>Cập nhật Địa lí</li>
         </ul>
       </div>
     </div>
@@ -1469,10 +1663,10 @@
           const TKB = {
               0: ["Chủ nhật: Nghỉ / Tự học"],
               1: ["HĐTN,HN(Chào cờ)", "LS&ĐL - Lịch sử", "Tiếng anh", "LS&ĐL - Địa lí", "Toán học - Đại số"],
-              2: ["Ngữ văn", "Tiếng anh", "Công nghệ", "HĐTN,HN", "Giáo dục thể chất"],
+              2: ["Ngữ văn", "Tiếng anh", "Công nghệ", "HĐTN,HN(Mang Lịch sử)", "Giáo dục thể chất"],
               3: ["Ngữ văn", "Toán học - Hình học", "KHTN - Vật lý", "NT - Mĩ thuật", "KHTN - Sinh học"],
               4: ["Toán học - Đại Số", "Tin học", "LS&ĐL - Lịch sử", "Âm nhạc", "Tiếng anh"],
-              5: ["Giáo dục địa phương", "Ngữ văn", "HĐTN,HN", "Toán học - Hình học", "Giáo dục công dân"],
+              5: ["Giáo dục địa phương", "Ngữ văn", "HĐTN,HN(Mang Lịch sử)", "Toán học - Hình học", "Giáo dục công dân"],
               6: ["KHTN - Sinh học", "Giáo dục thể chất", "Ngữ văn", "KHTN - Hóa học", "Nghỉ"]
           };
   
@@ -1693,6 +1887,8 @@
               
               if (force) {
                   popup.classList.add('open');
+                  // Ngăn scroll trang khi popup mở
+                  document.body.classList.add('popup-open');
                   return;
               }
               
@@ -1702,18 +1898,24 @@
               if (lastShown !== today) {
                   popup.classList.add('open');
                   localStorage.setItem('popupShownDate', today);
+                  // Ngăn scroll trang khi popup mở
+                  document.body.classList.add('popup-open');
               }
           }
   
           // Đóng popup khi click vào nút đóng
           popupClose.addEventListener('click', () => {
               popup.classList.remove('open');
+              // Cho phép scroll trang lại khi popup đóng
+              document.body.classList.remove('popup-open');
           });
   
           // Đóng popup khi click bên ngoài popup
           popup.addEventListener('click', (e) => {
               if (e.target === popup) {
                   popup.classList.remove('open');
+                  // Cho phép scroll trang lại khi popup đóng
+                  document.body.classList.remove('popup-open');
               }
           });
   
@@ -1721,6 +1923,8 @@
           document.addEventListener('keydown', (e) => {
               if (e.key === 'Escape' && popup.classList.contains('open')) {
                   popup.classList.remove('open');
+                  // Cho phép scroll trang lại khi popup đóng
+                  document.body.classList.remove('popup-open');
               }
           });
   
@@ -1752,6 +1956,47 @@
                   element.style.animationDelay = `${0.2 + index * 0.05}s`;
                 }, 100);
               });
+              
+              // Tối ưu hóa cho thiết bị di động
+              const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+              
+              if (isMobile) {
+                  // Thêm class mobile vào body để áp dụng CSS riêng
+                  document.body.classList.add('mobile-device');
+                  
+                  // Tối ưu hóa popup cho thiết bị di động
+                  const popupCard = document.getElementById('popupCard');
+                  if (popupCard) {
+                      // Đảm bảo popup có thể cuộn
+                      popupCard.style.maxHeight = '80vh';
+                      popupCard.style.overflowY = 'auto';
+                      popupCard.style.webkitOverflowScrolling = 'touch';
+                  }
+                  
+                  // Tối ưu hóa các bảng để cuộn ngang nếu cần
+                  const tables = document.querySelectorAll('table');
+                  tables.forEach(table => {
+                      const wrapper = document.createElement('div');
+                      wrapper.style.overflowX = 'auto';
+                      wrapper.style.marginBottom = '10px';
+                      table.parentNode.insertBefore(wrapper, table);
+                      wrapper.appendChild(table);
+                  });
+                  
+                  // Tăng kích thước các nút bấm cho dễ thao tác
+                  const buttons = document.querySelectorAll('button, .menu-btn, #showFullBtn');
+                  buttons.forEach(button => {
+                      button.style.minHeight = '44px'; // Kích thước tối thiểu theo khuyến nghị của Apple
+                      button.style.minWidth = '44px';
+                  });
+                  
+                  // Tối ưu hóa menu cho thiết bị di động
+                  const menuPanel = document.getElementById('menuPanel');
+                  if (menuPanel) {
+                      menuPanel.style.maxHeight = '70vh';
+                      menuPanel.style.overflowY = 'auto';
+                  }
+              }
           });
   
           /* -------------------------
@@ -1794,19 +2039,9 @@
                       html += `<tr><td>${i+1}</td><td>${m}</td></tr>`;
                   });
                   html += `</tbody></table>`;
-                  html += `<p style="margin-top:10px;"><b>Lịch trực: </b> <span id="todayTruc">${truc[showDay]}</span>`;
+                  html += `<p style="margin-top:10px;"><b>Lịch trực: </b> <span id="todayTruc">${truc[showDay]}</span></p>`;
   
                   container.innerHTML = html;
-  
-                  // handle edit trực: mở prompt -> lưu vào truc và localStorage (chỉ admin)
-                  document.getElementById('editTrucBtn').addEventListener('click', () => {
-                      const txt = prompt("Sửa ghi chú lịch trực cho ngày hiển thị:", truc[showDay]);
-                      if (txt !== null) {
-                          truc[showDay] = txt;
-                          localStorage.setItem('lichTruc', JSON.stringify(truc));
-                          renderTodayTKB(); // rerender để cập nhật
-                      }
-                  });
               }
               // full week + inline chỉnh trực của từng ngày
           document.getElementById('showFullBtn').addEventListener('click', function() {
@@ -1865,8 +2100,23 @@
               if (e.key === 'Escape') {
                   document.getElementById('menuPanel').style.display = 'none';
                   document.getElementById('popup').classList.remove('open');
+                  document.body.classList.remove('popup-open');
               }
           });
+          
+          // Xử lý sự kiện xoay màn hình
+          window.addEventListener('orientationchange', function() {
+              // Cập nhật lại kích thước canvas bầu trời sao
+              resizeCanvas();
+              
+              // Cập nhật lại vị trí các phần tử
+              setTimeout(function() {
+                  renderTodayTKB();
+              }, 300);
+          });
+          
+          // Thêm sự kiện touch để cải thiện trải nghiệm trên thiết bị cảm ứng
+          document.addEventListener('touchstart', function() {}, {passive: true});
   </script>
 </body>
 
