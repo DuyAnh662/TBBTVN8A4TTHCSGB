@@ -13,3 +13,21 @@ Chào mừng bạn đến với **TBBTVN8A4TTHCSGB** 🎉
 1. Clone repo về máy:
    ```bash
    git clone https://github.com/DuyAnh662/TBBTVN8A4TTHCSGB.git
+
+
+
+# 📚 TBBTVN8A4TTHCSGB
+
+Welcome to **TBBTVN8A4TTHCSGB** 🎉
+This is a repository I created to store and share documents, exercises, as well as related content during the learning process.
+
+## 🚀 Main content
+- Exercises and subject theory.
+- Useful reference materials.
+- Small projects to support learning.
+- Personal notes during the learning process.
+
+## 🛠️ How to use
+1. Clone the repo to your computer:
+```bash
+git clone https://github.com/DuyAnh662/TBBTVN8A4TTHCSGB.git
