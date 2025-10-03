@@ -19,6 +19,8 @@
       --danger: #e53935;
       --success: #43a047;
       --shadow: 0 4px 16px rgba(60,60,60,0.09);
+      --table-header-bg: #f5f7fa;
+      --table-row-even-bg: #f0f8ff;
     }
     html, body {
       margin: 0;
@@ -29,11 +31,32 @@
       min-height: 100vh;
       height: 100%;
       box-sizing: border-box;
+      transition: background .3s, color .3s;
     }
     #app {
       display: flex;
       min-height: 100vh;
+      background: var(--bg);
       transition: background 0.3s;
+    }
+    body.dark, body.dark html, body.dark #app {
+      background: #181f29 !important;
+    }
+    body.dark {
+      --primary: #90caf9;
+      --secondary: #1976d2;
+      --bg: #181f29;
+      --card: #232a35;
+      --text: #e3eaf7;
+      --border: #283447;
+      --accent: #90caf9;
+      --menu-bg: #181f29;
+      --menu-active: #232a35;
+      --danger: #ff6b6b;
+      --success: #5cb85c;
+      --shadow: 0 4px 20px 0 rgba(10,20,40,0.16);
+      --table-header-bg: #212c3b;
+      --table-row-even-bg: #232a35;
     }
     .sidebar {
       width: 220px;
@@ -45,6 +68,7 @@
       padding: 0;
       z-index: 10;
       min-height: 100vh;
+      transition: background .3s, border .3s;
     }
     .sidebar-logo {
       font-weight: bold;
@@ -56,6 +80,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      transition: color .3s, border .3s;
     }
     .sidebar-menu {
       flex: 1;
@@ -81,7 +106,7 @@
       gap: 14px;
       cursor: pointer;
       border-left: 4px solid transparent;
-      transition: background 0.15s, border-left 0.2s;
+      transition: background 0.15s, border-left 0.2s, color .3s;
     }
     .sidebar-menu button.active, .sidebar-menu button:focus {
       background: var(--menu-active);
@@ -95,7 +120,9 @@
       font-size: 0.95em;
       color: #888;
       background: var(--menu-bg);
+      transition: background .3s, color .3s, border .3s;
     }
+    body.dark .sidebar-footer { color: #b2c9e7; }
     .main {
       flex: 1;
       padding: 30px 28px 60px 28px;
@@ -104,6 +131,10 @@
       width: 100%;
       min-width: 0;
       transition: background 0.3s;
+      background: var(--bg);
+    }
+    body.dark .main {
+      background: #181f29;
     }
     .card {
       background: var(--card);
@@ -112,17 +143,19 @@
       padding: 28px 22px 20px 22px;
       margin-bottom: 32px;
       border: 1px solid var(--border);
+      transition: background .3s, color .3s, border .3s;
     }
     .card h2 {
       margin-top: 0;
       color: var(--primary);
       font-size: 1.25em;
       margin-bottom: 18px;
+      transition: color .3s;
     }
     .notice {
       display: flex;
       align-items: flex-start;
-      background: #e3f2fd;
+      background: var(--menu-active);
       color: var(--primary);
       padding: 14px 18px;
       border-radius: 9px;
@@ -130,8 +163,14 @@
       margin-bottom: 18px;
       gap: 10px;
       font-size: 1.05em;
+      border: 1px solid var(--border);
+      transition: background .3s, color .3s;
     }
-    /* Bố cục bài tập đẹp hơn */
+    body.dark .notice {
+      color: #90caf9;
+      background: #212b39;
+      border: 1px solid #263041;
+    }
     .tasks-list {
       display: flex;
       flex-wrap: wrap;
@@ -152,6 +191,12 @@
       padding: 15px 15px 12px 15px;
       margin: 0;
       border: 1px solid #e3eaf6;
+      transition: background .3s, color .3s, border .3s;
+    }
+    body.dark .task-item {
+      background: #232a35;
+      border: 1px solid #283447;
+      color: #e3eaf7;
     }
     .task-header {
       font-weight: bold;
@@ -161,13 +206,15 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      transition: color .3s;
     }
     .task-detail {
       font-size: 0.98em;
       color: #333;
       margin-bottom: 1px;
+      transition: color .3s;
     }
-    /* icon bài tập */
+    body.dark .task-detail { color: #e3eaf7; }
     .task-icon {
       width: 1.7em;
       height: 1.7em;
@@ -187,6 +234,7 @@
       display: flex;
       align-items: center;
       gap: 7px;
+      transition: color .3s;
     }
     .sch-ic-morning { font-size:1.1em; }
     .sch-ic-afternoon { font-size:1.13em; }
@@ -195,22 +243,45 @@
       border-collapse: collapse;
       margin: 1px 0 0 0;
       font-size: 0.97em;
+      background: var(--card);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 7px rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      transition: background .3s, color .3s, border .3s;
     }
     .schedule-table th, .schedule-table td {
-      padding: 7px 8px;
-      border-bottom: 1px solid #ececec;
+      padding: 8px 9px;
+      border-bottom: 1px solid var(--border);
+      transition: border .3s, color .3s, background .3s;
     }
     .schedule-table th {
       color: var(--primary);
       text-align: left;
       font-weight: 700;
-      background: #f5f7fa;
+      background: var(--table-header-bg);
+      transition: background .3s, color .3s;
+    }
+    .schedule-table tr:nth-child(even) td {
+      background: var(--table-row-even-bg);
+      transition: background .3s;
     }
     .schedule-table tr:last-child td {
       border-bottom: none;
     }
+    body.dark .schedule-table {
+      background: #232a35;
+      border: 1px solid #283447;
+    }
+    body.dark .schedule-table th {
+      background: var(--table-header-bg);
+      color: #90caf9;
+    }
+    body.dark .schedule-table tr:nth-child(even) td {
+      background: #202632;
+    }
     .tkb-today-summary {
-      background: #e3f2fd;
+      background: var(--menu-active);
       color: var(--primary);
       border-radius: 9px;
       padding: 14px 16px;
@@ -220,9 +291,17 @@
       display: flex;
       flex-direction: column;
       gap: 3px;
+      border: 1px solid var(--border);
+      transition: background .3s, color .3s, border .3s;
+    }
+    body.dark .tkb-today-summary {
+      background: #212b39;
+      border: 1px solid #263041;
+      color: #90caf9;
     }
     .tkb-today-summary b {
       color: var(--accent);
+      transition: color .3s;
     }
     .tkb-full-btn {
       margin-top: 18px;
@@ -248,7 +327,6 @@
       0% { opacity: 0; transform: translateY(10px);}
       100% { opacity: 1; transform: translateY(0);}
     }
-    /* Bottom nav for mobile */
     .bottom-nav {
       position: fixed;
       left: 0;
@@ -260,6 +338,7 @@
       z-index: 100;
       height: 58px;
       box-shadow: 0 -2px 10px rgba(60,60,60,0.08);
+      transition: background .3s, border .3s;
     }
     .bottom-nav ul {
       margin: 0; padding: 0;
@@ -329,12 +408,35 @@
         gap: 10px;
       }
     }
+    .dark-toggle {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 999;
+      background: var(--menu-bg);
+      color: var(--primary);
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      font-size: 1.05em;
+      font-weight: 600;
+      padding: 7px 18px;
+      box-shadow: 0 1px 8px rgba(40,60,100,0.08);
+      cursor: pointer;
+      transition: background .3s, color .3s, border .3s;
+    }
+    body.dark .dark-toggle {
+      background: #232a35;
+      color: #90caf9;
+      border: 1px solid #2d3644;
+    }
     ::-webkit-scrollbar { width: 9px; background: var(--bg);}
     ::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 8px;}
+    body.dark ::-webkit-scrollbar-thumb { background: #283447; }
     ::selection { background: #bbdefb; }
   </style>
 </head>
 <body>
+<button class="dark-toggle" id="darkToggle" aria-label="Chuyển Dark/Light Mode">🌙 Dark Mode</button>
 <div id="app">
   <!-- Sidebar for desktop -->
   <nav class="sidebar" id="sidebar" aria-label="Menu">
@@ -364,11 +466,24 @@
   </nav>
 </div>
 <script>
+  // DARK MODE LOGIC
+  const darkToggle = document.getElementById('darkToggle');
+  function setDarkMode(on) {
+    document.body.classList.toggle('dark', on);
+    darkToggle.textContent = on ? "☀️ Light Mode" : "🌙 Dark Mode";
+    localStorage.setItem('liteDarkMode', on ? "true" : "false");
+  }
+  // Khi bấm nút
+  darkToggle.onclick = () => setDarkMode(!document.body.classList.contains('dark'));
+  // Lưu trạng thái
+  (function(){
+    setDarkMode(localStorage.getItem('liteDarkMode') === "true");
+  })();
+
   // Dữ liệu thời khoá biểu & lịch trực
   const dayNames = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
-  // TKB: 0=CN, 1=Thứ 2 ... 6=Thứ 7, mỗi ngày có 9 tiết (5 sáng, 4 chiều) hoặc ít hơn
   const TKB = {
-    0: ["Chủ nhật: Nghỉ / Tự học"], // CN
+    0: ["Chủ nhật: Nghỉ / Tự học"],
     1: ["HĐTN,HN(Chào cờ)", "LS&ĐL - Lịch sử", "Tiếng Anh", "LS&ĐL - Địa lí", "Toán học - Đại số", "Nghỉ", "Nghỉ", "Nghỉ", "Nghỉ"],
     2: ["Ngữ văn", "Tiếng Anh", "Công nghệ", "HĐTN,HN", "Giáo dục thể chất", "Nghỉ", "Nghỉ", "Nghỉ", "Nghỉ"],
     3: ["Ngữ văn", "Toán học - Hình học", "KHTN - Vật lý", "NT - Mĩ thuật", "KHTN - Sinh học", "Nghỉ", "Nghỉ", "Nghỉ", "Nghỉ"],
@@ -385,8 +500,6 @@
     5: "Tổ 4",
     6: "Tổ 1"
   };
-
-  // Dữ liệu bài tập dạng đẹp
   const tasks = [
     { icon: "🌏", subject: "Địa lí", detail: "Học thuộc hết tiết 5 bài 2. Có thể bị gọi kiểm tra miệng." },
     { icon: "➗", subject: "Toán học - Hình", detail: "Làm luyện tập 2, 3.17 → 3.18 (SGK-60; 61). Ôn lại bài cũ." },
@@ -405,14 +518,10 @@
     { icon: "🎶", subject: "Âm nhạc", detail: 'Kẻ hết bài "Khúc ca bốn mùa" (SCD-5;6).' },
     { icon: "💻", subject: "Tin học", detail: "Hiện tại không có bài!" },
   ];
-
-  // Helper: Lấy VN time
   function getVNDateObj() {
     const s = new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' });
     return new Date(s);
   }
-
-  // Chia sáng/chiều - buổi chiều luôn hiện nếu có dữ liệu (kể cả chỉ có "Nghỉ")
   function renderSessionTKB(arr, session) {
     let start = (session === "morning") ? 0 : 5;
     let end = (session === "morning") ? 5 : arr.length;
@@ -420,7 +529,7 @@
     for(let i=start; i<end; i++) {
       if(arr[i]) hasData = true;
     }
-    if(!hasData) return ""; // Không có dữ liệu
+    if(!hasData) return "";
     let html = `<div class="schedule-session">
       <div class="schedule-session-title">${session==="morning"?'<span class="sch-ic-morning">🌅</span>Buổi sáng':'<span class="sch-ic-afternoon">🌆</span>Buổi chiều'}</div>
       <table class="schedule-table"><thead><tr><th>Tiết</th><th>Môn</th></tr></thead><tbody>`;
@@ -430,8 +539,6 @@
     html += "</tbody></table></div>";
     return html;
   }
-
-  // TKB & trực tự động cho hôm nay/ngày mai, có chia sáng/chiều
   function renderTodayTKB(type = "today") {
     const now = getVNDateObj();
     let day = now.getDay();
@@ -441,7 +548,6 @@
     if (type === "today") showDay = day;
     else if (type === "tomorrow") showDay = (day + 1) % 7;
     else showDay = day;
-
     let html = `<div><b>${dayNames[showDay]}</b> (${now.toLocaleDateString('vi-VN')})<br>Lịch trực: <b>${truc[showDay]}</b></div>`;
     if (TKB[showDay] && TKB[showDay].length > 0) {
       html += renderSessionTKB(TKB[showDay], "morning");
@@ -451,8 +557,6 @@
     }
     return html;
   }
-
-  // Full all TKB + trực, chia sáng/chiều
   function renderFullTKB() {
     let html = "";
     for(let k=1;k<=6;k++) {
@@ -462,8 +566,6 @@
     }
     return html;
   }
-
-  // Trang động (pages)
   const pages = {
     home: `
       <div class="card">
@@ -512,8 +614,6 @@
       </div>
     `
   };
-
-  // Trang động
   function renderPage(page) {
     if (!pages[page]) page = "home";
     document.getElementById('mainContent').innerHTML = pages[page];
@@ -521,12 +621,9 @@
     document.querySelectorAll('.bottom-nav button').forEach(btn => btn.classList.toggle('active', btn.dataset.page === page));
     document.getElementById('mainContent').focus();
     window.scrollTo(0,0);
-
     if(page === "schedule") {
-      // Render auto TKB/trực hôm nay/ngày mai
       document.getElementById('tkbTodayAuto').innerHTML = renderTodayTKB("today");
       document.getElementById('tkbTomorrowAuto').innerHTML = renderTodayTKB("tomorrow");
-      // Nút xem full
       const btn = document.getElementById('toggleFullTKB');
       const wrap = document.getElementById('fullTKBWrap');
       let isShow = false;
@@ -543,20 +640,13 @@
       };
     }
   }
-
-  // Sidebar menu
   document.querySelectorAll('.sidebar-menu button').forEach(btn => {
     btn.onclick = () => renderPage(btn.dataset.page);
   });
-  // Bottom nav
   document.querySelectorAll('.bottom-nav button').forEach(btn => {
     btn.onclick = () => renderPage(btn.dataset.page);
   });
-
-  // Render lần đầu
   renderPage('home');
-
-  // Tự động refresh lịch trên tab Lịch học mỗi phút (nếu đang mở)
   setInterval(() => {
     const page = [...document.querySelectorAll('.sidebar-menu button')].find(btn=>btn.classList.contains('active'))?.dataset.page;
     if(page === "schedule") {
