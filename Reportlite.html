@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Report lỗi / Góp ý</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1976d2;
+            --success: #43a047;
+            --error: #e53935;
+            --bg-light: #f5f7fa;
+            --bg-dark: #121212;
+            --card-light: #fff;
+            --card-dark: #23272f;
+            --glass-light: rgba(255,255,255,0.8);
+            --glass-dark: rgba(30,34,40,0.92);
+            --border-light: #e3e9f4;
+            --border-dark: #333b4d;
+            --text-light: #222;
+            --text-dark: #e0e6ef;
+        }
+        html, body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: background .3s, color .3s;
+        }
+        body.dark {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .report-box {
+            background: var(--glass-light);
+            border: 1.5px solid var(--border-light);
+            box-shadow: 0 4px 24px 0 rgba(30,60,90,0.06);
+            border-radius: 18px;
+            padding: 28px 18px 22px 18px;
+            text-align: center;
+            margin: 46px 0 30px 0;
+            max-width: 430px;
+            width: 100%;
+            transition: background .3s, border .3s;
+            box-sizing: border-box;
+        }
+        body.dark .report-box {
+            background: var(--glass-dark);
+            border: 1.5px solid var(--border-dark);
+        }
+        h2 {
+            font-size: 1.25em;
+            margin: 0 0 18px 0;
+            font-weight: 700;
+            letter-spacing: .2px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 110px;
+            max-height: 200px;
+            padding: 13px;
+            border: 1px solid #c8d0e0;
+            border-radius: 12px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            color: inherit;
+            background: #f7fafd;
+            margin-bottom: 14px;
+            transition: border .2s;
+            box-sizing: border-box;
+        }
+        body.dark textarea {
+            background: #161c23;
+            border-color: #232a33;
+            color: var(--text-dark);
+        }
+        textarea:focus { border-color: var(--primary); outline: none; }
+        .btn {
+            width: 100%;
+            padding: 15px 0;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            margin: 7px 0 0 0;
+            cursor: pointer;
+            transition: background .2s, color .2s, transform .12s;
+            background: var(--primary);
+            color: #fff;
+        }
+        .btn:active { transform: scale(.98);}
+        .btn.success { background: var(--success);}
+        .btn.error { background: var(--error);}
+        .btn.neutral {
+            background: #e3eaf4;
+            color: #333;
+        }
+        body.dark .btn.neutral {
+            background: #30343c;
+            color: #e0e6ef;
+        }
+        .btn:disabled { opacity: .7; cursor: not-allowed; }
+        .top-bar {
+            position: absolute;
+            top: 18px; right: 18px;
+        }
+        .toggle-btn {
+            background: #f7fafd;
+            color: #333;
+            border-radius: 8px;
+            padding: 6px 16px;
+            border: 1px solid #e0eaf7;
+            cursor: pointer;
+            font-size: .99em;
+            font-weight: 500;
+            transition: background .2s, color .2s;
+        }
+        body.dark .toggle-btn {
+            background: #222a33;
+            color: #e0e6ef;
+            border: 1px solid #323a44;
+        }
+        .modal {
+            position: fixed; left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.35);
+            display: none;
+            align-items: center; justify-content: center;
+            z-index: 9999;
+        }
+        .modal-content {
+            background: #fff;
+            color: #222;
+            padding: 30px 20px 18px 20px;
+            border-radius: 13px;
+            max-width: 300px;
+            text-align: center;
+            font-size: 1.1em;
+            box-shadow: 0 3px 25px rgba(30,60,90,0.11);
+            border-top: 4px solid var(--primary);
+            animation: fadeIn .3s;
+        }
+        .modal-content.success { border-top-color: var(--success); }
+        .modal-content.error { border-top-color: var(--error);}
+        body.dark .modal-content { background: #222a33; color: #e0e6ef;}
+        @keyframes fadeIn { from{opacity:0; transform: translateY(16px);} to{opacity:1; transform: none;} }
+        @media (max-width: 540px) {
+            .report-box { max-width: 98vw; padding: 14px 4vw; margin: 18px 0 18px 0;}
+            .modal-content { max-width: 95vw; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="toggle-btn" id="toggleTheme">🌙 Dark Mode</button>
+    </div>
+    <div class="center-content">
+        <form class="report-box" onsubmit="return false;">
+            <h2>📢 Gửi thông tin</h2>
+            <textarea id="message" placeholder="Nhập góp ý, báo lỗi hoặc đề xuất tính năng..."></textarea>
+            <button class="btn" type="button" onclick="sendData('report')">🐞 Gửi Report Lỗi</button>
+            <button class="btn success" type="button" onclick="sendData('feedback')">💡 Gửi Góp ý / Đề xuất</button>
+            <button class="btn neutral" type="button" onclick="goHome()">⬅️ Quay lại trang chính</button>
+        </form>
+    </div>
+    <div id="modal" class="modal">
+        <div id="modalContent" class="modal-content">
+            <div id="modalMessage"></div>
+            <button class="btn neutral" onclick="closeModal()">Đóng</button>
+        </div>
+    </div>
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyt-0a-VSrjLNAlae50y6WC0piKEmR6_isW-WcYwR6Ij50rTD0eCjcMALhE0ANEoZvs/exec";
+    // Theme
+    function setTheme(dark) {
+        document.body.classList.toggle('dark', dark);
+        document.getElementById('toggleTheme').textContent = dark ? '☀️ Light Mode' : '🌙 Dark Mode';
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+    }
+    document.getElementById('toggleTheme').onclick = () => setTheme(!document.body.classList.contains('dark'));
+    (function(){ setTheme(localStorage.getItem('theme')==='dark'); })();
+
+    // Modal
+    function showModal(msg, isError=false) {
+        const modal = document.getElementById('modal');
+        const content = document.getElementById('modalContent');
+        content.className = 'modal-content ' + (isError ? 'error' : 'success');
+        document.getElementById('modalMessage').innerHTML = msg;
+        modal.style.display = 'flex';
+    }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+    // Send
+    async function sendData(type) {
+        const msg = document.getElementById("message").value.trim();
+        if(!msg) return showModal("⚠️ Bạn chưa nhập nội dung!", true);
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(b=>b.disabled=true);
+        try {
+            const resp = await fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify({ message: msg, type })
+            });
+            if (resp.ok) {
+                const result = await resp.json();
+                if(result && result.status==="success") {
+                    showModal(type==="report"?"✅ Report đã được gửi thành công!":"✅ Góp ý đã được gửi thành công!");
+                    document.getElementById("message").value = "";
+                } else showModal("❌ Lỗi server, thử lại sau.", true);
+            } else showModal("❌ Lỗi mạng: kiểm tra kết nối!", true);
+        } catch {
+            showModal("❌ Lỗi khi gửi dữ liệu! Vui lòng kiểm tra lại URL hoặc kết nối.", true);
+        }
+        btns.forEach(b=>b.disabled=false);
+    }
+    function goHome(){ window.location.href = "indexlite.html"; }
+</script>
+</body>
+</html>
