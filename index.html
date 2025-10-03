@@ -1996,8 +1996,8 @@
             6: ["KHTN - Sinh học", "Giáo dục thể chất", "Ngữ văn", "KHTN - Hóa học", "Nghỉ", "Nghỉ", "Nghỉ", "Nghỉ", "Nghỉ"]
         };
 
-        // Lịch trực (có lưu localStorage nếu user chỉnh)
-        let truc = JSON.parse(localStorage.getItem('lichTruc') || 'null') || {
+        // Lịch trực (không lưu vào localStorage)
+        const truc = {
             0: "Chủ nhật: Không trực",
             1: "Tổ 4",
             2: "Tổ 1",
@@ -2352,7 +2352,7 @@
         });
 
         /* -------------------------
-           TKB rendering + full view + editing trực
+           TKB rendering + full view (không có editing trực)
            ------------------------- */
         function computeShowDay() {
             // Lấy giờ VN
@@ -2434,7 +2434,7 @@
             container.innerHTML = html;
         }
         
-        // full week + inline chỉnh trực của từng ngày
+        // full week (không có chỉnh trực)
         document.getElementById('showFullBtn').addEventListener('click', function() {
             const full = document.getElementById('fullTKB');
             if (full.style.display === 'block') {
@@ -2470,10 +2470,10 @@
                 }
                 html += `</tbody></table>`;
                 
-                // Thêm lịch trực ở dưới mỗi thứ
+                // Thêm lịch trực ở dưới mỗi thứ (không có chức năng chỉnh sửa)
                 html += `<div class="truc-container" style="margin-top: 12px; padding: 8px; background: var(--table-header-bg); border-radius: 8px;">`;
                 html += `<strong style="color: var(--table-header-text);">🧹 Lịch trực: </strong> `;
-                html += `<span class="editable-truc" data-day="${k}" style="cursor: pointer; padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.2);">${truc[k]}</span>`;
+                html += `<span>${truc[k]}</span>`;
                 html += `</div>`;
                 
                 html += `</div>`; // Kết thúc session-container
@@ -2484,21 +2484,6 @@
             full.innerHTML = html;
             full.style.display = 'block';
             this.textContent = '❌ Ẩn toàn bộ';
-            
-            // Thêm sự kiện click cho các ô chỉnh sửa lịch trực
-            full.querySelectorAll('.editable-truc').forEach(cell => {
-                cell.addEventListener('click', function() {
-                    const day = this.dataset.day;
-                    const currentVal = this.textContent;
-                    const newVal = prompt(`Nhập lịch trực cho ${dayNames[day]}:`, currentVal);
-                    if (newVal !== null && newVal.trim() !== '') {
-                        truc[day] = newVal.trim();
-                        localStorage.setItem('lichTruc', JSON.stringify(truc));
-                        this.textContent = newVal;
-                        renderTodayTKB();
-                    }
-                });
-            });
         });
         
         // init render
