@@ -15,7 +15,7 @@
         gtag('config', 'G-92KE83JEYM');
     </script>
     <meta charset="utf-8" />
-    <title>Bảng Thông Báo BTVN - 03/10/2025</title>
+    <title>Bảng Thông Báo BTVN - 04/10/2025</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <style>
         :root {
@@ -1820,7 +1820,7 @@
             <div class="popup-changelog">
                 <div class="changelog-header">
                     <span class="changelog-icon">📋</span>
-                    <span class="changelog-version">Changelog (V3.0.5)</span>
+                    <span class="changelog-version">Changelog (V3.0.6)</span>
                 </div>
 
                 <div class="changelog-content">
@@ -1831,8 +1831,8 @@
                         </div>
                         <ul class="change-list">
                             <li class="change-item">Cập nhật Ngữ văn</li>
-                            <li class="change-item">Cập nhật GDCD</li>
-                            <li class="change-item">Cập nhật Toán học - Hình học</li>
+                            <li class="change-item">Cập nhật Hóa học</li>
+                            <li class="change-item">Cập nhật Sinh học</li>
                         </ul>
                     </div>
 
@@ -1863,6 +1863,7 @@
                         </div>
                         <ul class="change-list">
                             <li class="change-item">Phân tích, sửa chữa và cải tiến thêm nhiều thứ khác</li>
+                            <li class="change-item">cập nhật lịch trực</li>
                         </ul>
                     </div>
                 </div>
@@ -1880,7 +1881,7 @@
     <div class="wrap">
         <!-- BTVN -->
         <div class="card liquid-effect">
-            <h1 class="fade-in-text">📢 Thông báo BTVN cho 04/10/2025</h1>
+            <h1 class="fade-in-text">📢 Thông báo BTVN cho 06/10/2025</h1>
             <h2 class="animate-item">📘 Địa lí</h2>
             <ul class="animate-item">
                 <li>Học thuộc hết tiết 5 bài 2</li>
@@ -1897,11 +1898,11 @@
             </ul>
             <h2 class="animate-item">✍ Ngữ văn</h2>
             <ul class="animate-item">
-                <li>Viết kết nói với đọc SGK-41</li>
+                <li>Làm hết thực hành tiếng việt SGK-42; 43</li>
             </ul>
             <h2 class="animate-item">🧬 Sinh học</h2>
             <ul class="animate-item">
-                <li>Làm phần "3.Kết quả"(Kẻ 2 bảng SGK-134)</li>
+                <li>Học phần 2 a, b tiết 9(Chưa rõ)</li>
             </ul>
             <h2 class="animate-item">🏠 GDĐP</h2>
             <ul class="animate-item">
@@ -1925,7 +1926,7 @@
             </ul>
             <h2 class="animate-item">⚗ Hóa học</h2>
             <ul class="animate-item">
-                <li>Học thuộc khái niệm biến đổi vật lý và khái niệm biến đổi hóa học</li>
+                <li>Làm bài cô dã đọc trên lớp</li>
             </ul>
             <h2 class="animate-item">🇬🇧 Tiếng Anh(Global success)</h2>
             <ul class="animate-item">
@@ -1964,9 +1965,9 @@
             <div class="changelog animate-item" style="margin-top:14px;">
                 <strong>Những môn học đã được thay đổi, câp nhật</strong>
                 <ul>
-                    <li>Cập nhật Ngũ văn</li>
-                    <li>Cập nhật Toán học - Hình học</li>
-                    <li>Cập nhật GDCD</li>
+                    <li>Cập nhật Ngữ văn</li>
+                    <li>Cập nhật Hóa học</li>
+                    <li>Cập nhật Sinh học</li>
                 </ul>
             </div>
         </div>
@@ -1999,12 +2000,12 @@
         // Lịch trực (không lưu vào localStorage)
         const truc = {
             0: "Chủ nhật: Không trực",
-            1: "Tổ 4",
-            2: "Tổ 1",
-            3: "Tổ 2",
-            4: "Tổ 3",
-            5: "Tổ 4",
-            6: "Tổ 1",
+            1: "Tổ 2",
+            2: "Tổ 3",
+            3: "Tổ 4",
+            4: "Tổ 1",
+            5: "Tổ 2",
+            6: "Tổ 3",
         };
 
         const dayNames = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
@@ -2353,14 +2354,7 @@
 
         /* -------------------------
            TKB rendering + full view (không có editing trực)
-           ------------------------- */
-        function computeShowDay() {
-            // Lấy giờ VN
-            const vnNow = new Date(new Date().toLocaleString('en-US', {
-                timeZone: 'Asia/Ho_Chi_Minh'
-            }));
-        }
-
+        ------------------------- */
         // NOTE: small helper: get VN date/time (works cross-browser)
         function getVNDateObj() {
             const s = new Date().toLocaleString('en-US', {
@@ -2377,15 +2371,25 @@
             // nếu trước 7h thì coi như ngày hôm trước
             if (hour < 7) day = (day - 1 + 7) % 7;
 
-            // logic hiển thị: Thứ Sáu -> hiện Thứ Bảy; Chủ Nhật -> hiện Thứ Hai; khác -> ngày mai
+            // logic hiển thị: Thứ Sáu -> hiện Thứ Bảy; Chủ Nhật -> hiện Thứ Hai; Thứ Bảy -> hiện Thứ Hai; khác -> ngày mai
             let showDay;
-            if (day === 5) showDay = 6;
-            else if (day === 0) showDay = 1;
-            else showDay = (day + 1) % 7;
+            if (day === 5) showDay = 6;           // Thứ Sáu -> Thứ Bảy
+            else if (day === 6) showDay = 1;      // Thứ Bảy -> Thứ Hai (KHÔNG HIỆN CN)
+            else if (day === 0) showDay = 1;      // Chủ Nhật -> Thứ Hai
+            else showDay = (day + 1) % 7;         // Các ngày khác -> ngày tiếp theo
 
-            // Tính ngày tháng năm cho ngày mai
+            // Tính ngày tháng năm cho ngày mai (hoặc thứ hai nếu là thứ bảy/chủ nhật)
             let tomorrowDate = new Date(d);
-            tomorrowDate.setDate(d.getDate() + 1);
+            if (day === 5) { // Thứ Sáu
+                tomorrowDate.setDate(d.getDate() + 1);
+            } else if (day === 6) { // Thứ Bảy
+                // Tìm tới thứ hai
+                tomorrowDate.setDate(d.getDate() + ((1 + 7 - day) % 7));
+            } else if (day === 0) { // Chủ Nhật
+                tomorrowDate.setDate(d.getDate() + 1);
+            } else {
+                tomorrowDate.setDate(d.getDate() + 1);
+            }
 
             // Định dạng ngày tháng năm
             const dayOfMonth = tomorrowDate.getDate();
@@ -2443,8 +2447,8 @@
                 return;
             }
             // build full
-            let html = `<div style="margin-bottom:8px;"><strong>📅 Thời khóa biểu cả tuần</strong></div>`;
-            for (let k = 1; k <= 6; k++) {
+            let html = `<div style="margin-bottom:8px;"><strong>📅 Thời khóa biểu cả tuần (Chủ nhật không hiển thị)</strong></div>`;
+            for (let k = 1; k <= 6; k++) { // Bỏ Chủ Nhật (k=0)
                 // Container cho mỗi ngày
                 html += `<div class="day-container">`;
                 html += `<div class="day-header">${dayNames[k]}</div>`;
