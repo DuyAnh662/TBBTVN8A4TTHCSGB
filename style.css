@@ -814,13 +814,14 @@ body.dark .popup-card .dev-info {
     margin-right: 6px;
 }
 
-/* Tab Navigation Fixed Styles */
+/* Tab Navigation Fixed Styles - Cập nhật */
 .tab-navigation-fixed {
     position: fixed;
     bottom: 20px;
     left: 20px;
     z-index: 1000;
     width: auto;
+    transition: all 0.5s ease;
 }
 
 .tab-container-fixed {
@@ -836,6 +837,7 @@ body.dark .popup-card .dev-info {
     z-index: 1;
     width: auto;
     height: 56px;
+    transition: all 0.5s ease;
 }
 
 .tab-btn-fixed {
@@ -858,18 +860,9 @@ body.dark .popup-card .dev-info {
     overflow: hidden;
 }
 
-.tab-btn-fixed:hover {
-    color: var(--button-hover-text);
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.tab-btn-fixed.active {
-    color: var(--button-hover-text);
-    background: rgba(255, 255, 255, 0.15);
-}
-
 .tab-btn-fixed .tab-icon {
     font-size: 18px;
+    transition: all 0.3s ease;
 }
 
 .tab-btn-fixed .tab-text {
@@ -879,6 +872,7 @@ body.dark .popup-card .dev-info {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+    transition: all 0.3s ease;
 }
 
 .tab-indicator-fixed {
@@ -890,6 +884,105 @@ body.dark .popup-card .dev-info {
     border-radius: 3px 3px 0 0;
     transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 3;
+}
+
+/* Trạng thái thu gọn của tab navigation */
+.tab-navigation-fixed.minimized {
+    opacity: 0.4;
+    transform: scale(0.85);
+    bottom: 15px;
+    left: 15px;
+}
+
+.tab-navigation-fixed.minimized .tab-container-fixed {
+    border-radius: 50px;
+    height: 50px;
+}
+
+.tab-navigation-fixed.minimized .tab-btn-fixed {
+    min-width: 45px;
+    padding: 8px 10px;
+}
+
+.tab-navigation-fixed.minimized .tab-btn-fixed .tab-icon {
+    font-size: 16px;
+}
+
+.tab-navigation-fixed.minimized .tab-btn-fixed .tab-text {
+    font-size: 0;
+    opacity: 0;
+}
+
+.tab-navigation-fixed.minimized .tab-indicator-fixed {
+    height: 2px;
+}
+
+/* Trạng thái thu nhỏ tối đa khi không sử dụng lâu */
+.tab-navigation-fixed.hidden {
+    opacity: 0.2;
+    transform: scale(0.7);
+    bottom: 10px;
+    left: 10px;
+}
+
+.tab-navigation-fixed.hidden .tab-container-fixed {
+    border-radius: 50px;
+    height: 45px;
+}
+
+.tab-navigation-fixed.hidden .tab-btn-fixed {
+    min-width: 40px;
+    padding: 6px 8px;
+}
+
+.tab-navigation-fixed.hidden .tab-btn-fixed .tab-icon {
+    font-size: 14px;
+}
+
+.tab-navigation-fixed.hidden .tab-btn-fixed .tab-text {
+    font-size: 0;
+    opacity: 0;
+}
+
+.tab-navigation-fixed.hidden .tab-indicator-fixed {
+    height: 2px;
+}
+
+/* Nút mở rộng tab khi bị thu gọn */
+.tab-expand-btn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-shadow);
+    color: var(--button-text);
+    font-size: 18px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.tab-expand-btn.visible {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.tab-expand-btn:hover {
+    background: var(--button-hover-bg);
+    color: var(--button-hover-text);
+    transform: scale(1.1);
 }
 
 /* Normal mode styles for fixed tabs */
@@ -941,6 +1034,56 @@ body.normal-mode:not(.dark) .tab-btn-fixed.active {
         height: 2px;
         border-radius: 2px 2px 0 0;
     }
+    
+    .tab-navigation-fixed.minimized {
+        opacity: 0.4;
+        transform: scale(0.8);
+        bottom: 12px;
+        left: 12px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-container-fixed {
+        border-radius: 40px;
+        height: 40px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-btn-fixed {
+        min-width: 35px;
+        padding: 6px 8px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-btn-fixed .tab-icon {
+        font-size: 14px;
+    }
+    
+    .tab-navigation-fixed.hidden {
+        opacity: 0.2;
+        transform: scale(0.65);
+        bottom: 10px;
+        left: 10px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-container-fixed {
+        border-radius: 35px;
+        height: 35px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-btn-fixed {
+        min-width: 30px;
+        padding: 5px 7px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-btn-fixed .tab-icon {
+        font-size: 12px;
+    }
+    
+    .tab-expand-btn {
+        bottom: 15px;
+        left: 15px;
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
 }
 
 /* Thêm media query cho màn hình rất nhỏ */
@@ -971,6 +1114,137 @@ body.normal-mode:not(.dark) .tab-btn-fixed.active {
     .tab-indicator-fixed {
         height: 2px;
         border-radius: 2px 2px 0 0;
+    }
+    
+    .tab-navigation-fixed.minimized {
+        opacity: 0.4;
+        transform: scale(0.75);
+        bottom: 8px;
+        left: 8px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-container-fixed {
+        border-radius: 35px;
+        height: 35px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-btn-fixed {
+        min-width: 30px;
+        padding: 5px 7px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-btn-fixed .tab-icon {
+        font-size: 12px;
+    }
+    
+    .tab-navigation-fixed.hidden {
+        opacity: 0.2;
+        transform: scale(0.6);
+        bottom: 6px;
+        left: 6px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-container-fixed {
+        border-radius: 30px;
+        height: 30px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-btn-fixed {
+        min-width: 25px;
+        padding: 4px 6px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-btn-fixed .tab-icon {
+        font-size: 10px;
+    }
+    
+    .tab-expand-btn {
+        bottom: 10px;
+        left: 10px;
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+}
+
+/* Thêm media query cho màn hình cực nhỏ */
+@media (max-width: 320px) {
+    .tab-navigation-fixed {
+        bottom: 8px;
+        left: 8px;
+    }
+    
+    .tab-container-fixed {
+        border-radius: 14px;
+        height: 40px;
+    }
+    
+    .tab-btn-fixed {
+        padding: 6px 8px;
+        min-width: 40px;
+    }
+    
+    .tab-btn-fixed .tab-icon {
+        font-size: 12px;
+    }
+    
+    .tab-btn-fixed .tab-text {
+        font-size: 7px;
+    }
+    
+    .tab-indicator-fixed {
+        height: 2px;
+        border-radius: 2px 2px 0 0;
+    }
+    
+    .tab-navigation-fixed.minimized {
+        opacity: 0.4;
+        transform: scale(0.7);
+        bottom: 6px;
+        left: 6px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-container-fixed {
+        border-radius: 30px;
+        height: 30px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-btn-fixed {
+        min-width: 25px;
+        padding: 4px 6px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-btn-fixed .tab-icon {
+        font-size: 10px;
+    }
+    
+    .tab-navigation-fixed.hidden {
+        opacity: 0.2;
+        transform: scale(0.55);
+        bottom: 5px;
+        left: 5px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-container-fixed {
+        border-radius: 25px;
+        height: 25px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-btn-fixed {
+        min-width: 20px;
+        padding: 3px 5px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-btn-fixed .tab-icon {
+        font-size: 8px;
+    }
+    
+    .tab-expand-btn {
+        bottom: 8px;
+        left: 8px;
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
     }
 }
 

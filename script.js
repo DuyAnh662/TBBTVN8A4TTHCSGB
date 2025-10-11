@@ -183,13 +183,24 @@ function initCanvas() {
 }
 
 /* -------------------------
-Tab Navigation functionality - Cập nhật để hỗ trợ tab fixed
+Tab Navigation functionality - Cập nhật để hỗ trợ tab fixed có thể thu gọn
 ------------------------- */
 function initTabNavigation() {
     // Cập nhật selector để sử dụng tab fixed
     const tabButtons = document.querySelectorAll('.tab-btn-fixed');
     const tabPanels = document.querySelectorAll('.tab-panel');
     const tabIndicator = document.querySelector('.tab-indicator-fixed');
+    const tabNavigationFixed = document.getElementById('tabNavigationFixed');
+    const tabExpandBtn = document.getElementById('tabExpandBtn');
+    
+    // Biến theo dõi trạng thái tab
+    let tabTimeout = null;
+    let isTabInteracted = false;
+    
+    // Thời gian chờ trước khi thu gọn tab (5 giây)
+    const TAB_HIDE_DELAY = 5000;
+    // Thời gian chờ trước khi ẩn tab thêm (10 giây)
+    const TAB_MINIMIZE_DELAY = 10000;
     
     // Function to update indicator position
     function updateIndicator(activeTab) {
@@ -233,7 +244,79 @@ function initTabNavigation() {
         
         // Save active tab to localStorage
         localStorage.setItem('activeTab', tabId);
+        
+        // Reset timer khi có tương tác
+        resetTabTimer();
     }
+    
+    // Reset timer cho tab
+    function resetTabTimer() {
+        // Xóa timer hiện tại nếu có
+        if (tabTimeout) {
+            clearTimeout(tabTimeout);
+        }
+        
+        // Đánh dấu là có tương tác
+        isTabInteracted = true;
+        
+        // Hiển thị tab đầy đủ
+        showFullTab();
+        
+        // Đặt timer mới để thu gọn tab
+        tabTimeout = setTimeout(() => {
+            minimizeTab();
+        }, TAB_HIDE_DELAY);
+    }
+    
+    // Hiển thị tab đầy đủ
+    function showFullTab() {
+        tabNavigationFixed.classList.remove('minimized', 'hidden');
+        tabExpandBtn.classList.remove('visible');
+    }
+    
+    // Thu gọn tab
+    function minimizeTab() {
+        tabNavigationFixed.classList.remove('hidden');
+        tabNavigationFixed.classList.add('minimized');
+        tabExpandBtn.classList.remove('visible');
+        
+        // Đặt timer để ẩn tab thêm
+        tabTimeout = setTimeout(() => {
+            hideTab();
+        }, TAB_MINIMIZE_DELAY);
+    }
+    
+    // Ẩn tab
+    function hideTab() {
+        tabNavigationFixed.classList.remove('minimized');
+        tabNavigationFixed.classList.add('hidden');
+        tabExpandBtn.classList.add('visible');
+    }
+    
+    // Xử lý sự kiện khi di chuột vào khu vực tab
+    tabNavigationFixed.addEventListener('mouseenter', () => {
+        resetTabTimer();
+    });
+    
+    // Xử lý sự kiện khi di chuột ra khỏi khu vực tab
+    tabNavigationFixed.addEventListener('mouseleave', () => {
+        if (isTabInteracted) {
+            tabTimeout = setTimeout(() => {
+                minimizeTab();
+            }, TAB_HIDE_DELAY);
+        }
+    });
+    
+    // Xử lý sự kiện khi nhấp vào nút mở rộng
+    tabExpandBtn.addEventListener('click', () => {
+        resetTabTimer();
+    });
+    
+    // Xử lý sự kiện touch cho thiết bị di động
+    tabNavigationFixed.addEventListener('touchstart', (e) => {
+        resetTabTimer();
+        e.preventDefault(); // Ngăn chặn hành vi mặc định
+    }, { passive: false });
     
     // Add click event listeners to tab buttons
     tabButtons.forEach(button => {
@@ -264,6 +347,9 @@ function initTabNavigation() {
             switchTab(savedTab);
         }
     }
+    
+    // Khởi động timer ban đầu
+    resetTabTimer();
 }
 
 /* -------------------------
