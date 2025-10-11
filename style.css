@@ -1014,80 +1014,161 @@ body.normal-mode:not(.dark) .tab-btn-fixed.active {
     
     .tab-container-fixed {
         border-radius: 20px;
-        height: 50px;
+        height: 60px; /* Tăng chiều cao từ 50px lên 60px */
     }
     
     .tab-btn-fixed {
-        padding: 10px 12px;
-        min-width: 50px;
+        padding: 12px 16px; /* Tăng padding từ 10px 12px lên 12px 16px */
+        min-width: 70px; /* Tăng chiều rộng tối thiểu từ 50px lên 70px */
     }
     
     .tab-btn-fixed .tab-icon {
-        font-size: 16px;
+        font-size: 20px; /* Tăng kích thước icon từ 16px lên 20px */
     }
     
     .tab-btn-fixed .tab-text {
-        font-size: 9px;
+        font-size: 11px; /* Tăng kích thước chữ từ 9px lên 11px */
     }
     
     .tab-indicator-fixed {
-        height: 2px;
-        border-radius: 2px 2px 0 0;
+        height: 3px; /* Tăng độ dày từ 2px lên 3px */
+        border-radius: 3px 3px 0 0;
     }
     
     .tab-navigation-fixed.minimized {
         opacity: 0.4;
-        transform: scale(0.8);
+        transform: scale(0.9); /* Tăng tỷ lệ từ 0.8 lên 0.9 */
         bottom: 12px;
         left: 12px;
     }
     
     .tab-navigation-fixed.minimized .tab-container-fixed {
-        border-radius: 40px;
-        height: 40px;
+        border-radius: 45px; /* Tăng border radius từ 40px lên 45px */
+        height: 50px; /* Tăng chiều cao từ 40px lên 50px */
     }
     
     .tab-navigation-fixed.minimized .tab-btn-fixed {
-        min-width: 35px;
-        padding: 6px 8px;
+        min-width: 50px; /* Tăng chiều rộng tối thiểu từ 35px lên 50px */
+        padding: 10px 12px; /* Tăng padding từ 6px 8px lên 10px 12px */
     }
     
     .tab-navigation-fixed.minimized .tab-btn-fixed .tab-icon {
-        font-size: 14px;
+        font-size: 18px; /* Tăng kích thước icon từ 14px lên 18px */
     }
     
     .tab-navigation-fixed.hidden {
         opacity: 0.2;
-        transform: scale(0.65);
+        transform: scale(0.75); /* Tăng tỷ lệ từ 0.65 lên 0.75 */
         bottom: 10px;
         left: 10px;
     }
     
     .tab-navigation-fixed.hidden .tab-container-fixed {
-        border-radius: 35px;
-        height: 35px;
+        border-radius: 40px; /* Tăng border radius từ 35px lên 40px */
+        height: 45px; /* Tăng chiều cao từ 35px lên 45px */
     }
     
     .tab-navigation-fixed.hidden .tab-btn-fixed {
-        min-width: 30px;
-        padding: 5px 7px;
+        min-width: 45px; /* Tăng chiều rộng tối thiểu từ 30px lên 45px */
+        padding: 8px 10px; /* Tăng padding từ 5px 7px lên 8px 10px */
     }
     
     .tab-navigation-fixed.hidden .tab-btn-fixed .tab-icon {
-        font-size: 12px;
+        font-size: 16px; /* Tăng kích thước icon từ 12px lên 16px */
     }
     
     .tab-expand-btn {
         bottom: 15px;
         left: 15px;
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
+        width: 45px; /* Tăng kích thước từ 35px lên 45px */
+        height: 45px; /* Tăng kích thước từ 35px lên 45px */
+        font-size: 18px; /* Tăng kích thước font từ 16px lên 18px */
     }
 }
 
 /* Thêm media query cho màn hình rất nhỏ */
 @media (max-width: 480px) {
+    .tab-navigation-fixed {
+        bottom: 12px;
+        left: 12px;
+    }
+    
+    .tab-container-fixed {
+        border-radius: 18px;
+        height: 56px; /* Tăng chiều cao từ 45px lên 56px */
+    }
+    
+    .tab-btn-fixed {
+        padding: 12px 14px; /* Tăng padding từ 8px 10px lên 12px 14px */
+        min-width: 65px; /* Tăng chiều rộng tối thiểu từ 45px lên 65px */
+    }
+    
+    .tab-btn-fixed .tab-icon {
+        font-size: 18px; /* Tăng kích thước icon từ 14px lên 18px */
+    }
+    
+    .tab-btn-fixed .tab-text {
+        font-size: 10px; /* Tăng kích thước chữ từ 8px lên 10px */
+    }
+    
+    .tab-indicator-fixed {
+        height: 3px; /* Tăng độ dày từ 2px lên 3px */
+        border-radius: 3px 3px 0 0;
+    }
+    
+    .tab-navigation-fixed.minimized {
+        opacity: 0.4;
+        transform: scale(0.85); /* Tăng tỷ lệ từ 0.75 lên 0.85 */
+        bottom: 10px;
+        left: 10px;
+    }
+    
+    .tab-navigation-fixed.minimized .tab-container-fixed {
+        border-radius: 42px; /* Tăng border radius từ 35px lên 42px */
+        height: 48px; /* Tăng chiều cao từ 35px lên 48px */
+    }
+    
+    .tab-navigation-fixed.minimized .tab-btn-fixed {
+        min-width: 48px; /* Tăng chiều rộng tối thiểu từ 30px lên 48px */
+        padding: 10px 12px; /* Tăng padding từ 5px 7px lên 10px 12px */
+    }
+    
+    .tab-navigation-fixed.minimized .tab-btn-fixed .tab-icon {
+        font-size: 16px; /* Tăng kích thước icon từ 12px lên 16px */
+    }
+    
+    .tab-navigation-fixed.hidden {
+        opacity: 0.2;
+        transform: scale(0.7); /* Tăng tỷ lệ từ 0.6 lên 0.7 */
+        bottom: 8px;
+        left: 8px;
+    }
+    
+    .tab-navigation-fixed.hidden .tab-container-fixed {
+        border-radius: 38px; /* Tăng border radius từ 30px lên 38px */
+        height: 42px; /* Tăng chiều cao từ 30px lên 42px */
+    }
+    
+    .tab-navigation-fixed.hidden .tab-btn-fixed {
+        min-width: 40px; /* Tăng chiều rộng tối thiểu từ 25px lên 40px */
+        padding: 8px 10px; /* Tăng padding từ 4px 6px lên 8px 10px */
+    }
+    
+    .tab-navigation-fixed.hidden .tab-btn-fixed .tab-icon {
+        font-size: 14px; /* Tăng kích thước icon từ 10px lên 14px */
+    }
+    
+    .tab-expand-btn {
+        bottom: 12px;
+        left: 12px;
+        width: 42px; /* Tăng kích thước từ 30px lên 42px */
+        height: 42px; /* Tăng kích thước từ 30px lên 42px */
+        font-size: 16px; /* Tăng kích thước font từ 14px lên 16px */
+    }
+}
+
+/* Thêm media query cho màn hình cực nhỏ */
+@media (max-width: 320px) {
     .tab-navigation-fixed {
         bottom: 10px;
         left: 10px;
@@ -1095,156 +1176,75 @@ body.normal-mode:not(.dark) .tab-btn-fixed.active {
     
     .tab-container-fixed {
         border-radius: 16px;
-        height: 45px;
+        height: 52px; /* Tăng chiều cao từ 40px lên 52px */
     }
     
     .tab-btn-fixed {
-        padding: 8px 10px;
-        min-width: 45px;
+        padding: 10px 12px; /* Tăng padding từ 6px 8px lên 10px 12px */
+        min-width: 60px; /* Tăng chiều rộng tối thiểu từ 40px lên 60px */
     }
     
     .tab-btn-fixed .tab-icon {
-        font-size: 14px;
+        font-size: 16px; /* Tăng kích thước icon từ 12px lên 16px */
     }
     
     .tab-btn-fixed .tab-text {
-        font-size: 8px;
+        font-size: 9px; /* Tăng kích thước chữ từ 7px lên 9px */
     }
     
     .tab-indicator-fixed {
-        height: 2px;
-        border-radius: 2px 2px 0 0;
+        height: 3px; /* Tăng độ dày từ 2px lên 3px */
+        border-radius: 3px 3px 0 0;
     }
     
     .tab-navigation-fixed.minimized {
         opacity: 0.4;
-        transform: scale(0.75);
+        transform: scale(0.8); /* Tăng tỷ lệ từ 0.7 lên 0.8 */
         bottom: 8px;
         left: 8px;
     }
     
     .tab-navigation-fixed.minimized .tab-container-fixed {
-        border-radius: 35px;
-        height: 35px;
+        border-radius: 40px; /* Tăng border radius từ 30px lên 40px */
+        height: 44px; /* Tăng chiều cao từ 30px lên 44px */
     }
     
     .tab-navigation-fixed.minimized .tab-btn-fixed {
-        min-width: 30px;
-        padding: 5px 7px;
+        min-width: 44px; /* Tăng chiều rộng tối thiểu từ 25px lên 44px */
+        padding: 8px 10px; /* Tăng padding từ 4px 6px lên 8px 10px */
     }
     
     .tab-navigation-fixed.minimized .tab-btn-fixed .tab-icon {
-        font-size: 12px;
+        font-size: 14px; /* Tăng kích thước icon từ 10px lên 14px */
     }
     
     .tab-navigation-fixed.hidden {
         opacity: 0.2;
-        transform: scale(0.6);
+        transform: scale(0.65); /* Tăng tỷ lệ từ 0.55 lên 0.65 */
         bottom: 6px;
         left: 6px;
     }
     
     .tab-navigation-fixed.hidden .tab-container-fixed {
-        border-radius: 30px;
-        height: 30px;
+        border-radius: 36px; /* Tăng border radius từ 25px lên 36px */
+        height: 40px; /* Tăng chiều cao từ 25px lên 40px */
     }
     
     .tab-navigation-fixed.hidden .tab-btn-fixed {
-        min-width: 25px;
-        padding: 4px 6px;
+        min-width: 36px; /* Tăng chiều rộng tối thiểu từ 20px lên 36px */
+        padding: 6px 8px; /* Tăng padding từ 3px 5px lên 6px 8px */
     }
     
     .tab-navigation-fixed.hidden .tab-btn-fixed .tab-icon {
-        font-size: 10px;
+        font-size: 12px; /* Tăng kích thước icon từ 8px lên 12px */
     }
     
     .tab-expand-btn {
         bottom: 10px;
         left: 10px;
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-    }
-}
-
-/* Thêm media query cho màn hình cực nhỏ */
-@media (max-width: 320px) {
-    .tab-navigation-fixed {
-        bottom: 8px;
-        left: 8px;
-    }
-    
-    .tab-container-fixed {
-        border-radius: 14px;
-        height: 40px;
-    }
-    
-    .tab-btn-fixed {
-        padding: 6px 8px;
-        min-width: 40px;
-    }
-    
-    .tab-btn-fixed .tab-icon {
-        font-size: 12px;
-    }
-    
-    .tab-btn-fixed .tab-text {
-        font-size: 7px;
-    }
-    
-    .tab-indicator-fixed {
-        height: 2px;
-        border-radius: 2px 2px 0 0;
-    }
-    
-    .tab-navigation-fixed.minimized {
-        opacity: 0.4;
-        transform: scale(0.7);
-        bottom: 6px;
-        left: 6px;
-    }
-    
-    .tab-navigation-fixed.minimized .tab-container-fixed {
-        border-radius: 30px;
-        height: 30px;
-    }
-    
-    .tab-navigation-fixed.minimized .tab-btn-fixed {
-        min-width: 25px;
-        padding: 4px 6px;
-    }
-    
-    .tab-navigation-fixed.minimized .tab-btn-fixed .tab-icon {
-        font-size: 10px;
-    }
-    
-    .tab-navigation-fixed.hidden {
-        opacity: 0.2;
-        transform: scale(0.55);
-        bottom: 5px;
-        left: 5px;
-    }
-    
-    .tab-navigation-fixed.hidden .tab-container-fixed {
-        border-radius: 25px;
-        height: 25px;
-    }
-    
-    .tab-navigation-fixed.hidden .tab-btn-fixed {
-        min-width: 20px;
-        padding: 3px 5px;
-    }
-    
-    .tab-navigation-fixed.hidden .tab-btn-fixed .tab-icon {
-        font-size: 8px;
-    }
-    
-    .tab-expand-btn {
-        bottom: 8px;
-        left: 8px;
-        width: 25px;
-        height: 25px;
-        font-size: 12px;
+        width: 38px; /* Tăng kích thước từ 25px lên 38px */
+        height: 38px; /* Tăng kích thước từ 25px lên 38px */
+        font-size: 14px; /* Tăng kích thước font từ 12px lên 14px */
     }
 }
 

@@ -197,10 +197,10 @@ function initTabNavigation() {
     let tabTimeout = null;
     let isTabInteracted = false;
     
-    // Thời gian chờ trước khi thu gọn tab (5 giây)
-    const TAB_HIDE_DELAY = 5000;
-    // Thời gian chờ trước khi ẩn tab thêm (10 giây)
-    const TAB_MINIMIZE_DELAY = 10000;
+    // Thời gian chờ trước khi thu gọn tab (tăng lên 8 giây để người dùng có thời gian thao tác)
+    const TAB_HIDE_DELAY = 8000;
+    // Thời gian chờ trước khi ẩn tab thêm (tăng lên 15 giây)
+    const TAB_MINIMIZE_DELAY = 15000;
     
     // Function to update indicator position
     function updateIndicator(activeTab) {
@@ -312,11 +312,24 @@ function initTabNavigation() {
         resetTabTimer();
     });
     
-    // Xử lý sự kiện touch cho thiết bị di động
+    // Xử lý sự kiện touch cho thiết bị di động - cải thiện để dễ thao tác hơn
     tabNavigationFixed.addEventListener('touchstart', (e) => {
         resetTabTimer();
-        e.preventDefault(); // Ngăn chặn hành vi mặc định
-    }, { passive: false });
+        // Không ngăn chặn hành vi mặc định để vẫn cho phép cuộn trang
+    }, { passive: true });
+    
+    // Thêm sự kiện touchend để đảm bảo tab chuyển khi người dùng nhấc tay
+    tabNavigationFixed.addEventListener('touchend', (e) => {
+        // Xác định vị trí touch
+        const touch = e.changedTouches[0];
+        const element = document.elementFromPoint(touch.clientX, touch.clientY);
+        
+        // Kiểm tra nếu element là tab button
+        if (element && element.classList.contains('tab-btn-fixed')) {
+            // Kích hoạt sự kiện click
+            element.click();
+        }
+    });
     
     // Add click event listeners to tab buttons
     tabButtons.forEach(button => {
