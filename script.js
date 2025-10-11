@@ -2,7 +2,7 @@
 
 // Kết hợp cả hai API URL
 const API_URL = "https://script.google.com/macros/s/AKfycbw5sjUwJfwRtKBQQu5FgYrmgSjoQ22vvnmlv99H7YJHTVgVZRXm1vWB7fFJg8B2O2M7/exec";
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby-w7uCCpBZadyJ1lSUoeFlKZlNcV0sGiAAn0hJJdpK06J2CQfzeIf2c72xRmqQbBOv/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6lj5eJtrQbCsr8LdZZVOS_oPzavS4n8gLiIMjs8AoUqp0oSDpbC5Q3PgKXTkuP1hV/exec";
 
 // Dữ liệu mặc định (từ file 1)
 const defaultData = {
@@ -183,32 +183,24 @@ function initCanvas() {
 }
 
 /* -------------------------
-Tab Navigation functionality
+Tab Navigation functionality - Cập nhật để hỗ trợ tab fixed
 ------------------------- */
 function initTabNavigation() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
+    // Cập nhật selector để sử dụng tab fixed
+    const tabButtons = document.querySelectorAll('.tab-btn-fixed');
     const tabPanels = document.querySelectorAll('.tab-panel');
-    const tabIndicator = document.querySelector('.tab-indicator');
+    const tabIndicator = document.querySelector('.tab-indicator-fixed');
     
     // Function to update indicator position
     function updateIndicator(activeTab) {
-        const isDesktop = window.matchMedia('(min-width: 900px)').matches;
         const tabRect = activeTab.getBoundingClientRect();
         const containerRect = activeTab.parentElement.getBoundingClientRect();
 
-        if (isDesktop) {
-            tabIndicator.style.top = `${tabRect.top - containerRect.top}px`;
-            tabIndicator.style.height = `${tabRect.height}px`;
-            tabIndicator.style.left = '0';
-            tabIndicator.style.width = '6px';
-            tabIndicator.style.borderRadius = '6px';
-        } else {
-            tabIndicator.style.left = `${tabRect.left - containerRect.left}px`;
-            tabIndicator.style.width = `${tabRect.width}px`;
-            tabIndicator.style.top = 'auto';
-            tabIndicator.style.height = '6px';
-            tabIndicator.style.borderRadius = '6px';
-        }
+        // Cập nhật vị trí và kích thước cho indicator
+        tabIndicator.style.left = `${tabRect.left - containerRect.left}px`;
+        tabIndicator.style.width = `${tabRect.width}px`;
+        tabIndicator.style.height = '3px';
+        tabIndicator.style.borderRadius = '3px 3px 0 0';
     }
     
     // Function to switch tabs
@@ -251,14 +243,14 @@ function initTabNavigation() {
     });
     
     // Initialize indicator position
-    const activeTab = document.querySelector('.tab-btn.active');
+    const activeTab = document.querySelector('.tab-btn-fixed.active');
     if (activeTab) {
         updateIndicator(activeTab);
     }
     
     // Handle window resize
     window.addEventListener('resize', () => {
-        const currentActiveTab = document.querySelector('.tab-btn.active');
+        const currentActiveTab = document.querySelector('.tab-btn-fixed.active');
         if (currentActiveTab) {
             updateIndicator(currentActiveTab);
         }
@@ -267,7 +259,7 @@ function initTabNavigation() {
     // Restore active tab from localStorage
     const savedTabId = localStorage.getItem('activeTab');
     if (savedTabId) {
-        const savedTab = document.querySelector(`.tab-btn[data-tab="${savedTabId}"]`);
+        const savedTab = document.querySelector(`.tab-btn-fixed[data-tab="${savedTabId}"]`);
         if (savedTab) {
             switchTab(savedTab);
         }
