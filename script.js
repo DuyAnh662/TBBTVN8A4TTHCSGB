@@ -182,8 +182,6 @@ function initCanvas() {
     drawSky();
 }
 
-/* Thay thế hàm initTabNavigation trong file script.js */
-
 /* -------------------------
 Tab Navigation functionality
 ------------------------- */
@@ -192,34 +190,27 @@ function initTabNavigation() {
     const tabPanels = document.querySelectorAll('.tab-panel');
     const tabIndicator = document.querySelector('.tab-indicator');
     
-// Function to update indicator position
-function updateIndicator(activeTab) {
-  const isDesktop = window.matchMedia('(min-width: 900px)').matches;
-  const tabRect = activeTab.getBoundingClientRect();
-  const containerRect = activeTab.parentElement.getBoundingClientRect();
+    // Function to update indicator position
+    function updateIndicator(activeTab) {
+        const isDesktop = window.matchMedia('(min-width: 900px)').matches;
+        const tabRect = activeTab.getBoundingClientRect();
+        const containerRect = activeTab.parentElement.getBoundingClientRect();
 
-  if (isDesktop) {
-    tabIndicator.style.top = `${tabRect.top - containerRect.top}px`;
-    tabIndicator.style.height = `${tabRect.height}px`;
-    tabIndicator.style.left = '0';
-    tabIndicator.style.width = '6px';
-    tabIndicator.style.borderRadius = '6px';
-  } else {
-    tabIndicator.style.left = `${tabRect.left - containerRect.left}px`;
-    tabIndicator.style.width = `${tabRect.width}px`;
-    tabIndicator.style.top = 'auto';
-    tabIndicator.style.height = '6px';
-    tabIndicator.style.borderRadius = '6px';
-  }
-}
-// Cập nhật lại khi zoom hoặc resize
-window.addEventListener('resize', () => {
-  const currentActiveTab = document.querySelector('.tab-btn.active');
-  if (currentActiveTab) {
-    updateIndicator(currentActiveTab);
-  }
-});
-
+        if (isDesktop) {
+            tabIndicator.style.top = `${tabRect.top - containerRect.top}px`;
+            tabIndicator.style.height = `${tabRect.height}px`;
+            tabIndicator.style.left = '0';
+            tabIndicator.style.width = '6px';
+            tabIndicator.style.borderRadius = '6px';
+        } else {
+            tabIndicator.style.left = `${tabRect.left - containerRect.left}px`;
+            tabIndicator.style.width = `${tabRect.width}px`;
+            tabIndicator.style.top = 'auto';
+            tabIndicator.style.height = '6px';
+            tabIndicator.style.borderRadius = '6px';
+        }
+    }
+    
     // Function to switch tabs
     function switchTab(targetTab) {
         // Update active states
@@ -282,6 +273,7 @@ window.addEventListener('resize', () => {
         }
     }
 }
+
 /* -------------------------
 Menu
 ------------------------- */
@@ -441,6 +433,8 @@ function openPopup(force = false) {
     if (force) {
         elements.popup.classList.add("open");
         document.body.classList.add("popup-open");
+        // Ngăn cuộn trang khi popup mở
+        document.body.style.overflow = "hidden";
         return;
     }
 
@@ -449,12 +443,16 @@ function openPopup(force = false) {
         elements.popup.classList.add("open");
         localStorage.setItem('popupShownDate', today);
         document.body.classList.add("popup-open");
+        // Ngăn cuộn trang khi popup mở
+        document.body.style.overflow = "hidden";
     }
 }
 
 function closePopup() {
     elements.popup.classList.remove("open");
     document.body.classList.remove("popup-open");
+    // Khôi phục lại khả năng cuộn trang
+    document.body.style.overflow = "";
 }
 
 /* -------------------------
