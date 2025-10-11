@@ -66,7 +66,9 @@ const elements = {
     fullTKB: document.getElementById("fullTKB"),
     changelogContainer: document.getElementById("changelogContainer"),
     // Color themes
-    colorThemes: document.querySelectorAll(".color-theme")
+    colorThemes: document.querySelectorAll(".color-theme"),
+    // Refresh button
+    refreshBtn: document.getElementById("refreshBtn")
 };
 
 /* -------------------------
@@ -78,18 +80,19 @@ const ctx = canvas.getContext("2d");
 // Tối ưu hiệu suất canvas
 let animationFrameId = null;
 let meteorInterval = null;
+let stars = [];
+let meteors = [];
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    
+    // Tạo lại các ngôi sao khi kích thước canvas thay đổi
+    createStars();
 }
 
-function initCanvas() {
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-    
-    // Tạo sao
-    const stars = [];
+function createStars() {
+    stars = [];
     for (let i = 0; i < 200; i++) {
         stars.push({
             x: Math.random() * canvas.width,
@@ -99,20 +102,22 @@ function initCanvas() {
             blinkSpeed: 0.005 + Math.random() * 0.01
         });
     }
-    
-    // Sao băng
-    const meteors = [];
-    
-    function createMeteor() {
-        meteors.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * (canvas.height / 2),
-            length: Math.random() * 80 + 40,
-            speed: Math.random() * 12 + 8,
-            opacity: 1,
-            angle: Math.random() * Math.PI / 4 + Math.PI / 4
-        });
-    }
+}
+
+function createMeteor() {
+    meteors.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * (canvas.height / 2),
+        length: Math.random() * 80 + 40,
+        speed: Math.random() * 12 + 8,
+        opacity: 1,
+        angle: Math.random() * Math.PI / 4 + Math.PI / 4
+    });
+}
+
+function initCanvas() {
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
     
     // Vẽ bầu trời
     function drawSky() {
@@ -445,11 +450,11 @@ function applyThemeFromStorage() {
     // Áp dụng dark mode
     if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark");
-        elements.menuDark.innerHTML = '<span class="menu-item-icon">☀️</span><span class="menu-item-text">Light Mode</span>';
+        elements.menuDark.innerHTML = '<span class="menu-item-icon"><i class="fas fa-sun"></i></span><span class="menu-item-text">Light Mode</span>';
         applyColorTheme("black");
     } else {
         document.body.classList.remove("dark");
-        elements.menuDark.innerHTML = '<span class="menu-item-icon">🌙</span><span class="menu-item-text">Dark Mode</span>';
+        elements.menuDark.innerHTML = '<span class="menu-item-icon"><i class="fas fa-moon"></i></span><span class="menu-item-text">Dark Mode</span>';
         const savedTheme = localStorage.getItem("colorTheme") || "blue";
         applyColorTheme(savedTheme);
     }
@@ -457,10 +462,10 @@ function applyThemeFromStorage() {
     // Áp dụng liquid/normal mode
     if (localStorage.getItem("liquidMode") === "normal") {
         document.body.classList.add("normal-mode");
-        elements.menuLiquid.innerHTML = '<span class="menu-item-icon">✨</span><span class="menu-item-text">Đang hiển thị giao diện thường</span>';
+        elements.menuLiquid.innerHTML = '<span class="menu-item-icon"><i class="fas fa-magic"></i></span><span class="menu-item-text">Đang hiển thị giao diện thường</span>';
     } else {
         document.body.classList.remove("normal-mode");
-        elements.menuLiquid.innerHTML = '<span class="menu-item-icon">✨</span><span class="menu-item-text">Đang hiển thị Liquid Glass</span>';
+        elements.menuLiquid.innerHTML = '<span class="menu-item-icon"><i class="fas fa-magic"></i></span><span class="menu-item-text">Đang hiển thị Liquid Glass</span>';
     }
 }
 
@@ -785,7 +790,7 @@ function initEventListeners() {
         
         if (isExpanded) {
             elements.fullTKB.style.display = "none";
-            this.textContent = "📅 Xem toàn bộ TKB";
+            this.innerHTML = '<i class="fas fa-calendar-week"></i> Xem toàn bộ TKB';
             return;
         }
 
@@ -825,7 +830,7 @@ function initEventListeners() {
 
         elements.fullTKB.innerHTML = html;
         elements.fullTKB.style.display = "block";
-        this.textContent = "❌ Ẩn toàn bộ";
+        this.innerHTML = '<i class="fas fa-times"></i> Ẩn toàn bộ';
     });
     
     // Xử lý sự kiện xoay màn hình
@@ -872,7 +877,10 @@ function initApp() {
     
     // Tải dữ liệu từ API
     loadAllData();
-    
+
+    // Khởi tạo nút làm mới dữ liệu
+    initRefreshButton();
+
     // Cập nhật TKB mỗi phút
     refreshTimer = setInterval(renderTodayTKB, 60 * 1000);
     
@@ -924,6 +932,29 @@ function initApp() {
         elements.menuPanel.style.maxHeight = "70vh";
         elements.menuPanel.style.overflowY = "auto";
     }
+}
+
+// --- Nút làm mới dữ liệu ---
+function initRefreshButton() {
+    const refreshBtn = elements.refreshBtn;
+    if (!refreshBtn) return;
+
+    refreshBtn.addEventListener("click", async () => {
+        if (isLoading) return; // tránh spam
+        
+        // Thêm hiệu ứng xoay cho icon
+        const icon = refreshBtn.querySelector('i');
+        if (icon) {
+            icon.classList.add('fa-spin');
+        }
+        
+        await loadAllData(); // Gọi lại API và render toàn bộ dữ liệu mới
+        
+        // Ngừng hiệu ứng xoay
+        if (icon) {
+            icon.classList.remove('fa-spin');
+        }
+    });
 }
 
 // Khởi tạo ứng dụng khi DOM đã tải
