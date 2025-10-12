@@ -320,7 +320,34 @@ body.dark {
     --bullet-color: var(--accent);
     --btvn-bullet-color: #ffffff; /* Màu vàng cho dark mode */
 }
+/* Chủ đề màu xanh bạc hà */
+body.theme-mint {
+    --theme-primary: #38d39f;
+    --theme-secondary: #6ee7b7;
+    --theme-bg: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    --theme-accent: #38d39f;
+    --theme-card: rgba(255, 255, 255, 0.7);
+    --theme-glass: rgba(255, 255, 255, 0.25);
+    --theme-border: rgba(255, 255, 255, 0.18);
+    --normal-card: #f0fdf4;
+    --normal-border: #d1fae5;
+    --button-hover-bg: var(--theme-primary);
+    --loading-color: var(--theme-primary);
+    --loading-bg: rgba(56, 211, 159, 0.3);
+    --table-header-text: var(--theme-primary);
+    --heading-text: var(--theme-primary);
+    --strong-text: var(--theme-primary);
+    --link-color: var(--theme-primary);
+    --link-hover-color: var(--theme-secondary);
+    --changelog-text: var(--theme-primary);
+    --bullet-color: var(--theme-primary);
+    --btvn-bullet-color: #a7f3d0; /* Màu xanh bạc hà nhạt cho chủ đề mint */
+}
 
+/* Thêm màu cho nút chọn chủ đề */
+.color-theme.mint {
+    background: #38d39f;
+}
 /* Canvas bầu trời sao - chỉ hiển thị trong dark mode */
 #sky {
     position: fixed;
@@ -2074,5 +2101,41 @@ body.dark .menu-panel a.donate-btn {
     .refresh-btn {
         top: 70px;
         right: 18px;
+    }
+}
+/* Thông báo nhỏ */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--text);
+    padding: 12px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--glass-border);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    max-width: 80%;
+    text-align: center;
+}
+
+.notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Responsive cho thông báo trên thiết bị di động */
+@media (max-width: 768px) {
+    .notification {
+        bottom: 80px; /* Tránh bị che bởi tab navigation */
+        max-width: 90%;
+        padding: 10px 16px;
+        font-size: 14px;
     }
 }

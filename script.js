@@ -2,27 +2,27 @@
 
 // Kết hợp cả hai API URL
 const API_URL = "https://script.google.com/macros/s/AKfycbw5sjUwJfwRtKBQQu5FgYrmgSjoQ22vvnmlv99H7YJHTVgVZRXm1vWB7fFJg8B2O2M7/exec";
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6lj5eJtrQbCsr8LdZZVOS_oPzavS4n8gLiIMjs8AoUqp0oSDpbC5Q3PgKXTkuP1hV/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweN5Gvo3AxC0a0HwDAonTGPJXYtuaexfIUk5oz0QHlSF-cnpJyVIhpGu_Y1LmItNV8/exec";
 
 // Dữ liệu mặc định (từ file 1)
 const defaultData = {
     tkb: {
-        0: ["nghỉ"],
-        1: ["null"],
-        2: ["null"],
-        3: ["null"],
-        4: ["null"],
-        5: ["null"],
+        0: ["Nghỉ"],
+        1: ["Null"],
+        2: ["Null"],
+        3: ["Null"],
+        4: ["Null"],
+        5: ["Null"],
         6: ["Nghỉ"]
     },
     truc: {
         0: "Chủ nhật: Không trực",
-        1: "Tổ 2",
-        2: "Tổ 3",
-        3: "Tổ 4",
-        4: "Tổ 1",
-        5: "Tổ 2",
-        6: "Tổ 3",
+        1: "Null",
+        2: "Null",
+        3: "Null",
+        4: "Null",
+        5: "Null",
+        6: "Null",
     }
 };
 
@@ -40,6 +40,11 @@ let currentData = {
 // Biến theo dõi trạng thái
 let isLoading = false;
 let refreshTimer = null;
+
+// Biến cho tính năng làm mới tự động
+let autoRefreshInterval = null;
+let isAutoRefreshEnabled = false;
+let lastData = null;
 
 // Cache DOM elements
 const elements = {
@@ -421,6 +426,12 @@ function initMenu() {
         openPopup(true);
     });
     
+    // Auto refresh toggle - Thêm mới
+    const menuAutoRefresh = document.getElementById("menuAutoRefresh");
+    if (menuAutoRefresh) {
+        menuAutoRefresh.addEventListener("click", toggleAutoRefresh);
+    }
+    
     // Color theme selection
     elements.colorThemes.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -471,7 +482,7 @@ function applyThemeFromStorage() {
 
 function applyColorTheme(theme) {
     // Xóa tất cả các class màu chủ đề
-    document.body.classList.remove("theme-pink", "theme-blue", "theme-green", "theme-fresh", 'theme-popular', 'theme-white', 'theme-black', 'theme-aquaviolet');
+    document.body.classList.remove("theme-pink", "theme-blue", "theme-green", "theme-fresh", 'theme-popular', 'theme-white', 'theme-black', 'theme-aquaviolet', 'theme-mint');
 
     // Thêm class màu chủ đề được chọn
     if (theme) {
@@ -744,6 +755,9 @@ async function loadAllData() {
             notices: data.notices || []
         };
         
+        // Lưu dữ liệu để so sánh sau này
+        lastData = JSON.parse(JSON.stringify(currentData));
+        
         renderBTVN(currentData);
         renderTKB(currentData);
         renderChangelog(currentData);
@@ -757,6 +771,9 @@ async function loadAllData() {
             changelog: [],
             notices: []
         };
+        
+        // Lưu dữ liệu để so sánh sau này
+        lastData = JSON.parse(JSON.stringify(currentData));
         
         renderBTVN(currentData);
         renderTKB(currentData);
@@ -776,6 +793,116 @@ function getVNDateObj() {
         timeZone: 'Asia/Ho_Chi_Minh'
     });
     return new Date(s);
+}
+
+/* -------------------------
+Tính năng làm mới tự động
+------------------------- */
+// Hàm so sánh dữ liệu
+function hasDataChanged(newData, oldData) {
+    if (!oldData) return true;
+    
+    // So sánh BTVN
+    if (JSON.stringify(newData.btvn) !== JSON.stringify(oldData.btvn)) return true;
+    
+    // So sánh TKB
+    if (JSON.stringify(newData.tkb) !== JSON.stringify(oldData.tkb)) return true;
+    
+    // So sánh thông báo
+    if (JSON.stringify(newData.notices) !== JSON.stringify(oldData.notices)) return true;
+    
+    // So sánh changelog
+    if (JSON.stringify(newData.changelog) !== JSON.stringify(oldData.changelog)) return true;
+    
+    return false;
+}
+
+// Hàm làm mới tự động
+async function autoRefreshData() {
+    try {
+        const data = await fetchData();
+        if (data && hasDataChanged(data, lastData)) {
+            // Cập nhật dữ liệu nếu có thay đổi
+            lastData = JSON.parse(JSON.stringify(data));
+            currentData = {
+                tkb: data.tkb || defaultData.tkb,
+                truc: data.truc || defaultData.truc,
+                btvn: data.btvn || [],
+                changelog: data.changelog || [],
+                notices: data.notices || []
+            };
+            
+            // Cập nhật giao diện
+            renderBTVN(currentData);
+            renderTKB(currentData);
+            renderChangelog(currentData);
+            renderNotices(currentData);
+        }
+    } catch (error) {
+        console.error("Lỗi khi làm mới tự động:", error);
+    }
+}
+
+// Hàm bật/tắt làm mới tự động
+function toggleAutoRefresh() {
+    isAutoRefreshEnabled = !isAutoRefreshEnabled;
+    
+    if (isAutoRefreshEnabled) {
+        // Bật làm mới tự động
+        autoRefreshInterval = setInterval(autoRefreshData, 20000); // Mỗi 10 giây
+        document.getElementById("menuAutoRefresh").innerHTML = 
+            '<span class="menu-item-icon"><i class="fas fa-pause-circle"></i></span><span class="menu-item-text">Tắt làm mới tự động</span>';
+        
+        // Ẩn nút làm mới thủ công
+        if (elements.refreshBtn) {
+            elements.refreshBtn.style.display = "none";
+        }
+        
+        // Hiển thị thông báo
+        showNotification("Đã bật làm mới tự động mỗi 10 giây");
+    } else {
+        // Tắt làm mới tự động
+        if (autoRefreshInterval) {
+            clearInterval(autoRefreshInterval);
+            autoRefreshInterval = null;
+        }
+        document.getElementById("menuAutoRefresh").innerHTML = 
+            '<span class="menu-item-icon"><i class="fas fa-sync-alt"></i></span><span class="menu-item-text">Bật làm mới tự động</span>';
+        
+        // Hiện nút làm mới thủ công
+        if (elements.refreshBtn) {
+            elements.refreshBtn.style.display = "flex";
+        }
+        
+        // Hiển thị thông báo
+        showNotification("Đã tắt làm mới tự động");
+    }
+    
+    // Lưu trạng thái vào localStorage
+    localStorage.setItem('autoRefreshEnabled', isAutoRefreshEnabled);
+}
+// Hàm hiển thị thông báo nhỏ
+function showNotification(message) {
+    // Tạo phần tử thông báo
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    
+    // Thêm vào body
+    document.body.appendChild(notification);
+    
+    // Hiển thị thông báo
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Ẩn sau 3 giây
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
 }
 
 /* -------------------------
@@ -857,6 +984,24 @@ function initApp() {
     // Áp dụng chủ đề từ lưu trữ
     applyThemeFromStorage();
     
+    // Khôi phục trạng thái làm mới tự động
+    // Mặc định là bật nếu chưa có giá trị trong localStorage
+    const savedAutoRefresh = localStorage.getItem('autoRefreshEnabled');
+    if (savedAutoRefresh === null || savedAutoRefresh === 'true') {
+        isAutoRefreshEnabled = true;
+        autoRefreshInterval = setInterval(autoRefreshData, 10000);
+        document.getElementById("menuAutoRefresh").innerHTML = 
+            '<span class="menu-item-icon"><i class="fas fa-pause-circle"></i></span><span class="menu-item-text">Tắt làm mới tự động</span>';
+        
+        // Ẩn nút làm mới thủ công khi tự động được bật
+        if (elements.refreshBtn) {
+            elements.refreshBtn.style.display = "none";
+        }
+        
+        // Lưu trạng thái vào localStorage
+        localStorage.setItem('autoRefreshEnabled', 'true');
+    }
+    
     // Khởi tạo các thành phần
     initCanvas();
     initMenu();
@@ -933,7 +1078,6 @@ function initApp() {
         elements.menuPanel.style.overflowY = "auto";
     }
 }
-
 // --- Nút làm mới dữ liệu ---
 function initRefreshButton() {
     const refreshBtn = elements.refreshBtn;
@@ -970,5 +1114,8 @@ window.addEventListener("beforeunload", () => {
     }
     if (refreshTimer) {
         clearInterval(refreshTimer);
+    }
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
     }
 });
