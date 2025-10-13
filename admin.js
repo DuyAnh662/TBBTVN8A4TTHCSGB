@@ -175,6 +175,9 @@ async function handleLogin() {
         <option value="Công nghệ">Công nghệ</option>
         <option value="GDTC">GDTC</option>
         <option value="HĐTN">HĐTN</option>
+        <option value="GDĐP">GDĐP</option>
+        <option value="Mĩ thuật">Mĩ Thuật</option>
+        <option value="Âm nhạc">Âm nhạc</option>
         <option value="Nghỉ">Nghỉ</option>
       </select>
       <button type="button" class="removePeriod" aria-label="Xóa tiết">❌</button>
