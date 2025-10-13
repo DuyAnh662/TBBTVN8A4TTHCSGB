@@ -169,11 +169,12 @@ async function handleLogin() {
         <option value="Hóa học">Hóa học</option>
         <option value="Sinh học">Sinh học</option>
         <option value="Lịch sử">Lịch sử</option>
-        <option value="Địa lý">Địa lý</option>
+        <option value="Địa lí">Địa lí</option>
         <option value="GDCD">GDCD</option>
         <option value="Tin học">Tin học</option>
         <option value="Công nghệ">Công nghệ</option>
-        <option value="Thể dục">Thể dục</option>
+        <option value="GDTC">GDTC</option>
+        <option value="HĐTN">HĐTN</option>
         <option value="Nghỉ">Nghỉ</option>
       </select>
       <button type="button" class="removePeriod" aria-label="Xóa tiết">❌</button>

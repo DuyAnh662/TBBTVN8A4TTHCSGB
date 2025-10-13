@@ -107,14 +107,75 @@
       font-size: 14px;
       box-shadow: 0 3px 6px rgba(0,0,0,0.2);
       transition: background 0.3s;
+      z-index: 1000;
     }
     #toggleMode:hover {
       background: #004c99;
+    }
+
+    /* Popup styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    
+    .popup-content {
+      background-color: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+    
+    .popup-message {
+      color: red;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    
+    .popup-close {
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    
+    .popup-close:hover {
+      background-color: #004c99;
+    }
+    
+    /* Dark mode for popup */
+    body.dark .popup-content {
+      background-color: #2c2c2c;
     }
   </style>
 </head>
 <body>
   <button id="toggleMode">🌙 Dark Mode</button>
+  
+  <!-- Popup -->
+  <div id="popup" class="popup-overlay">
+    <div class="popup-content">
+      <div class="popup-message">Lưu ý: Trang web này hiện không còn được update chỉ để xem!</div>
+      <button id="closePopup" class="popup-close">Đã hiểu</button>
+    </div>
+  </div>
+
   <div class="container">
     <h1>📢 Thông báo BTVN [NEW 11:45 - 16/9/2025]</h1>
 
@@ -234,6 +295,8 @@
 
   <script>
     const btn = document.getElementById("toggleMode");
+    const popup = document.getElementById("popup");
+    const closePopupBtn = document.getElementById("closePopup");
 
     // 🌟 Khi mở web, kiểm tra localStorage để áp dụng chế độ trước đó
     if (localStorage.getItem("theme") === "dark") {
@@ -250,6 +313,18 @@
       } else {
         btn.textContent = "🌙 Dark Mode";
         localStorage.setItem("theme", "light");
+      }
+    });
+
+    // Đóng popup khi nhấn nút
+    closePopupBtn.addEventListener("click", () => {
+      popup.style.display = "none";
+    });
+
+    // Đóng popup khi nhấn bất kỳ đâu bên ngoài popup content
+    window.addEventListener("click", (event) => {
+      if (event.target === popup) {
+        popup.style.display = "none";
       }
     });
   </script>
