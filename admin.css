@@ -25,6 +25,7 @@ body {
   padding: 0;
   line-height: 1.6;
   color: #333;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 header {
@@ -52,7 +53,7 @@ header {
   border-radius: 8px;
   margin-bottom: 20px;
   box-shadow: var(--card-shadow);
-  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color 0.3s, color 0.3s;
 }
 
 .card:hover {
@@ -66,6 +67,7 @@ header {
   font-size: 1.5rem;
   border-bottom: 2px solid #eee;
   padding-bottom: 10px;
+  transition: color 0.3s, border-color 0.3s;
 }
 
 label {
@@ -73,6 +75,7 @@ label {
   margin-top: 10px;
   font-weight: 600;
   color: #444;
+  transition: color 0.3s;
 }
 
 input, textarea, select {
@@ -83,7 +86,7 @@ input, textarea, select {
   border-radius: 6px;
   border: 1px solid #ddd;
   font-size: 16px;
-  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed), background-color 0.3s, color 0.3s;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -194,6 +197,116 @@ button:active {
   font-size: 1rem;
   padding: 12px;
   min-width: 140px;
+}
+
+.data-viewer {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  max-height: 400px;
+  overflow-y: auto;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Nút chuyển đổi chế độ */
+.dark-toggle {
+  position: relative;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--primary);
+  color: white;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.dark-toggle:hover {
+  background: var(--secondary);
+  transform: rotate(30deg);
+}
+
+/* Chế độ tối */
+body.dark {
+  background-color: #121212;
+  color: #e6e6e6;
+}
+
+body.dark .card {
+  background-color: #1e1e1e;
+  color: #e6e6e6;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+body.dark header {
+  background: linear-gradient(90deg, #0d47a1, #1565c0);
+}
+
+body.dark .card h2 {
+  color: #90caf9;
+  border-bottom-color: #333;
+}
+
+body.dark label {
+  color: #bbb;
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select {
+  background-color: #2a2a2a;
+  color: #e6e6e6;
+  border: 1px solid #444;
+}
+
+body.dark input:focus,
+body.dark textarea:focus,
+body.dark select:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+}
+
+body.dark .btn-update {
+  background: #0288d1;
+}
+
+body.dark .btn-new {
+  background: #2e7d32;
+}
+
+body.dark .data-viewer {
+  background-color: #2a2a2a;
+  color: #e6e6e6;
+  border: 1px solid #444;
+}
+
+body.dark .period-row button {
+  background: #c62828;
+}
+
+body.dark .toast.success {
+  background: #2e7d32;
+}
+
+body.dark .toast.error {
+  background: #c62828;
+}
+
+body.dark .toast.info {
+  background: #0288d1;
+}
+
+body.dark #tkb_truc {
+  background-color: #2a2a2a;
+  color: #e6e6e6;
+  border: 1px solid #444;
 }
 
 /* Responsive */

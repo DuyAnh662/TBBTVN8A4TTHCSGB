@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     loginMsg: document.getElementById("loginMsg"),
     loginForm: document.getElementById("loginForm"),
     logoutBtn: document.getElementById("logoutBtn"),
+    // Dark mode elements
+    darkModeToggle: document.getElementById("darkModeToggle"),
+    modeIcon: document.getElementById("modeIcon"),
     // BTVN elements
     btvnForm: document.getElementById("btvnForm"),
     subject: document.getElementById("subject"),
@@ -30,14 +33,39 @@ document.addEventListener("DOMContentLoaded", () => {
     refreshData: document.getElementById("refreshData"),
     dataViewer: document.getElementById("dataViewer")
   };
-// Hàm băm SHA-256 trả về chuỗi hex
-async function sha256Hex(str) {
-  const enc = new TextEncoder();
-  const data = enc.encode(str);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-}
+
+  // Hàm băm SHA-256 trả về chuỗi hex
+  async function sha256Hex(str) {
+    const enc = new TextEncoder();
+    const data = enc.encode(str);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  // ----- DARK MODE -----
+  // Kiểm tra chế độ đã lưu trong localStorage
+  if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    elements.modeIcon.textContent = "☀️";
+  }
+
+  // Xử lý sự kiện chuyển đổi chế độ
+  elements.darkModeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    
+    // Cập nhật icon và lưu trạng thái
+    if (document.body.classList.contains("dark")) {
+      elements.modeIcon.textContent = "☀️";
+      localStorage.setItem("darkMode", "true");
+      showToast("Đã chuyển sang chế độ tối", "info");
+    } else {
+      elements.modeIcon.textContent = "🌙";
+      localStorage.setItem("darkMode", "false");
+      showToast("Đã chuyển sang chế độ sáng", "info");
+    }
+  });
+
   // ----- LOGIN -----
   // Kiểm tra trạng thái đăng nhập
   if (localStorage.getItem("adminLogged") === "true") {
@@ -53,27 +81,27 @@ async function sha256Hex(str) {
   // Xử lý đăng xuất
   elements.logoutBtn.addEventListener("click", handleLogout);
 
-async function handleLogin() {
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value;
+  async function handleLogin() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
 
-  if (!username || !password) {
-    elements.loginMsg.textContent = "Vui lòng nhập tên đăng nhập và mật khẩu!";
-    showToast("Vui lòng nhập đủ thông tin", "error");
-    return;
+    if (!username || !password) {
+      elements.loginMsg.textContent = "Vui lòng nhập tên đăng nhập và mật khẩu!";
+      showToast("Vui lòng nhập đủ thông tin", "error");
+      return;
+    }
+
+    const enteredHash = await sha256Hex(password);
+
+    if (username === CONFIG.ADMIN_USERNAME && enteredHash === CONFIG.ADMIN_PASSWORD_HASH) {
+      localStorage.setItem("adminLogged", "true");
+      showAdmin();
+      showToast("Đăng nhập thành công", "success");
+    } else {
+      elements.loginMsg.textContent = "Sai tài khoản hoặc mật khẩu!";
+      showToast("Sai tài khoản hoặc mật khẩu", "error");
+    }
   }
-
-  const enteredHash = await sha256Hex(password);
-
-  if (username === CONFIG.ADMIN_USERNAME && enteredHash === CONFIG.ADMIN_PASSWORD_HASH) {
-    localStorage.setItem("adminLogged", "true");
-    showAdmin();
-    showToast("Đăng nhập thành công", "success");
-  } else {
-    elements.loginMsg.textContent = "Sai tài khoản hoặc mật khẩu!";
-    showToast("Sai tài khoản hoặc mật khẩu", "error");
-  }
-}
 
   function handleLogout() {
     localStorage.removeItem("adminLogged");

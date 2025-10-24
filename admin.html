@@ -26,7 +26,12 @@
   <div id="admin-panel" style="display:none;">
     <header>
       <h1>Trang Quản Trị BTVN</h1>
-      <button id="logoutBtn" aria-label="Đăng xuất">Đăng xuất</button>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button id="darkModeToggle" class="dark-toggle" aria-label="Chuyển đổi chế độ sáng/tối">
+          <span id="modeIcon">🌙</span>
+        </button>
+        <button id="logoutBtn" aria-label="Đăng xuất">Đăng xuất</button>
+      </div>
     </header>
 
     <main class="container">
@@ -122,43 +127,42 @@
   <script>
     // Thêm biến toàn cục để theo dõi trạng thái tải
     window.isLoading = false;
-// Cấu hình (lưu hash chứ không lưu mật khẩu plaintext)
-const CONFIG = {
-  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbweN5Gvo3AxC0a0HwDAonTGPJXYtuaexfIUk5oz0QHlSF-cnpJyVIhpGu_Y1LmItNV8/exec",
-  // ... các cấu hình khác bạn đang dùng
-  ADMIN_USERNAME: "admin",
-  // Thay bằng hash bạn đã tạo
-  ADMIN_PASSWORD_HASH: "329fe68c81dcc05dec93329dd35760318da604549107ec7ccb81d3a7545f54f4",
-  TOAST_DURATION: 3000,
-  // ... giữ lại các config khác nếu có
-};
+    // Cấu hình (lưu hash chứ không lưu mật khẩu plaintext)
+    const CONFIG = {
+      SCRIPT_URL: "https://script.google.com/macros/s/AKfycby_jnFFS0Adq6yBqm5VQHjy2Ap59kqFclYDiJlHYkEwmvV21QQZzp-ZvJ27xumt3IDR/exec",
+      // ... các cấu hình khác bạn đang dùng
+      ADMIN_USERNAME: "admin",
+      // Thay bằng hash bạn đã tạo
+      ADMIN_PASSWORD_HASH: "329fe68c81dcc05dec93329dd35760318da604549107ec7ccb81d3a7545f54f4",
+      TOAST_DURATION: 3000,
+      // ... giữ lại các config khác nếu có
+    };
 
-// Hàm băm SHA-256 trả về hex string
-async function sha256Hex(str) {
-  const enc = new TextEncoder();
-  const data = enc.encode(str);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}
+    // Hàm băm SHA-256 trả về hex string
+    async function sha256Hex(str) {
+      const enc = new TextEncoder();
+      const data = enc.encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-// Ví dụ dùng trong xử lý login (giả sử bạn đã cache các element DOM)
-async function handleLogin() {
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value; // vẫn lấy input người dùng
+    // Ví dụ dùng trong xử lý login (giả sử bạn đã cache các element DOM)
+    async function handleLogin() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value; // vẫn lấy input người dùng
 
-  const enteredHash = await sha256Hex(password);
+      const enteredHash = await sha256Hex(password);
 
-  if (username === CONFIG.ADMIN_USERNAME && enteredHash === CONFIG.ADMIN_PASSWORD_HASH) {
-    localStorage.setItem("adminLogged", "true");
-    showAdmin(); // hàm hiện panel admin của bạn
-    showToast("Đăng nhập thành công", "success");
-  } else {
-    document.getElementById('loginMsg').textContent = "Sai tài khoản hoặc mật khẩu!";
-    showToast("Sai tài khoản hoặc mật khẩu", "error");
-  }
-}
-
+      if (username === CONFIG.ADMIN_USERNAME && enteredHash === CONFIG.ADMIN_PASSWORD_HASH) {
+        localStorage.setItem("adminLogged", "true");
+        showAdmin(); // hàm hiện panel admin của bạn
+        showToast("Đăng nhập thành công", "success");
+      } else {
+        document.getElementById('loginMsg').textContent = "Sai tài khoản hoặc mật khẩu!";
+        showToast("Sai tài khoản hoặc mật khẩu", "error");
+      }
+    }
   </script>
   <script src="admin.js" defer></script>
 </body>

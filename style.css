@@ -2108,3 +2108,67 @@ body.dark .menu-panel a.donate-btn {
         font-size: 14px;
     }
 }
+.timeline {
+  border-left: 3px solid var(--table-header-bg);
+  margin-left: 10px;
+  padding-left: 15px;
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 12px;
+  animation: fadeInUp 0.4s ease both;
+}
+.timeline-icon {
+  position: absolute;
+  left: -22px;
+  top: 0;
+}
+.timeline-content {
+  background: var(--card-bg);
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.changelog-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.changelog-card {
+  background: var(--card-bg);
+  border-left: 5px solid var(--table-header-bg);
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  animation: fadeInUp 0.4s ease both;
+}
+
+.changelog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: var(--table-header-text);
+}
+
+.changelog-version {
+  font-size: 1.1em;
+}
+
+.changelog-date {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.changelog-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.changelog-list li {
+  margin: 3px 0;
+  padding-left: 5px;
+}

@@ -2,7 +2,7 @@
 
 // Kết hợp cả hai API URL
 const API_URL = "https://script.google.com/macros/s/AKfycbw5sjUwJfwRtKBQQu5FgYrmgSjoQ22vvnmlv99H7YJHTVgVZRXm1vWB7fFJg8B2O2M7/exec";
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweN5Gvo3AxC0a0HwDAonTGPJXYtuaexfIUk5oz0QHlSF-cnpJyVIhpGu_Y1LmItNV8/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_jnFFS0Adq6yBqm5VQHjy2Ap59kqFclYDiJlHYkEwmvV21QQZzp-ZvJ27xumt3IDR/exec";
 
 // Dữ liệu mặc định (từ file 1)
 const defaultData = {
@@ -565,24 +565,49 @@ function closePopup() {
 /* -------------------------
 Data functions
 ------------------------- */
-async function fetchData() {
-    if (isLoading) return null;
-    
-    isLoading = true;
-    
-    try {
-        const res = await fetch(SCRIPT_URL + "?action=getAll");
-        const data = await res.json();
-        // Nếu có "result" thì trả về result
-        return data.result || data;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        return null;
-    } finally {
-        isLoading = false;
-    }
+
+// ✅ Danh sách môn học cố định từ trang admin
+const SUBJECT_LIST = [
+  "Toán - Đại số", "Toán - Hình học", "Ngữ văn", "Tiếng Anh", "Vật lý",
+  "Hóa học", "Sinh học", "Lịch sử", "Địa lí", "GDCD",
+  "Tin học", "Công nghệ", "GDTC", "GDĐP", "Mĩ thuật", "Âm nhạc", "HĐTN"
+];
+
+// ✅ Hàm đảm bảo tất cả môn đều có trong danh sách (dù trống dữ liệu)
+function ensureAllSubjects(btvnArray) {
+  const map = {};
+  btvnArray.forEach(item => { map[item.subject] = item; });
+
+  const fullList = SUBJECT_LIST.map(sub => {
+    if (map[sub]) return map[sub];
+    return { subject: sub, content: "(Chưa có bài tập)", date: "", note: "" };
+  });
+  return fullList;
 }
 
+async function fetchData() {
+  if (isLoading) return null;
+  
+  isLoading = true;
+
+  try {
+    const res = await fetch(SCRIPT_URL + "?action=getAll");
+    const data = await res.json();
+
+    if (!data || !data.result) return null;
+
+    // ✅ Bổ sung dữ liệu trống cho các môn chưa có
+    data.result.btvn = ensureAllSubjects(data.result.btvn || []);
+
+    // ✅ Trả về dữ liệu đã chuẩn hóa
+    return data.result;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  } finally {
+    isLoading = false;
+  }
+}
 // Hàm render BTVN từ API
 function renderBTVN(data) {
     const container = elements.btvnContainer;
@@ -682,22 +707,64 @@ function renderTKB(data) {
 
 // Hàm render changelog từ API
 function renderChangelog(data) {
-    const container = elements.changelogContainer;
-    if (!data?.changelog?.length) {
-        container.innerHTML = "<p>Chưa có dữ liệu changelog.</p>";
-        return;
-    }
+  const container = elements.changelogContainer;
+  if (!data?.changelog?.length) {
+    container.innerHTML = "<p>Chưa có dữ liệu changelog.</p>";
+    return;
+  }
 
-    let html = '<div class="changelog animate-item">';
-    html += '<strong>Những thay đổi gần đây</strong>';
-    html += '<ul>';
-    
-    data.changelog.forEach(item => {
-        html += `<li>${item}</li>`;
-    });
-    
-    html += '</ul></div>';
-    container.innerHTML = html;
+  // Nếu log có dạng "[23/10/2025] v2.3 - nội dung thay đổi", tách phần ngày + version + nội dung
+  const parsedLogs = data.changelog.map(line => {
+    const parts = line.split(" - ");
+const header = parts[0] || "";
+const content = parts.slice(1).join(" - ") || "";
+
+const dateMatch = header.match(/\[(.*?)\]/);
+const numMatch = header.match(/#(\d+)/);
+
+const date = dateMatch ? dateMatch[1] : "";
+const version = numMatch ? `#${numMatch[1]}` : "";
+
+return { date, version, content: content.trim() };
+
+    if (match) {
+      return { date: match[1], version: match[2] || "Cập nhật", content: match[3] };
+    } else {
+      return { date: "", version: "Cập nhật", content: line };
+    }
+  });
+
+  // Gom nhóm theo ngày hoặc version
+  const grouped = {};
+  parsedLogs.forEach(log => {
+    const key = `${log.date} ${log.version}`;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(log.content);
+  });
+
+  // Tạo HTML
+  let html = `
+    <div class="changelog-section">
+      <h3 style="margin-bottom:10px;">📝 Nhật ký thay đổi</h3>
+  `;
+
+  Object.keys(grouped).forEach(key => {
+    const [date, version] = key.split(" ");
+    html += `
+      <div class="changelog-card">
+        <div class="changelog-header">
+          <span class="changelog-version">❗ ${version}</span>
+          ${date ? `<span class="changelog-date">📅 ${date}</span>` : ""}
+        </div>
+        <ul class="changelog-list">
+          ${grouped[key].map(item => `<li>🔹 ${item}</li>`).join("")}
+        </ul>
+      </div>
+    `;
+  });
+
+  html += "</div>";
+  container.innerHTML = html;
 }
 
 // Hàm render thông báo từ API
@@ -922,7 +989,7 @@ function initEventListeners() {
         }
 
         let html = `<div style="margin-bottom:8px;"><strong>📅 Thời khóa biểu cả tuần</strong></div>`;
-        for (let k = 1; k <= 6; k++) {
+        for (let k = 1; k <= 5; k++) {
             html += `<div class="day-container">`;
             html += `<div class="day-header">${dayNames[k]}</div>`;
             html += `<div class="session-container">`;
