@@ -501,10 +501,10 @@ function applyThemeFromStorage() {
     // Áp dụng liquid/normal mode
     if (localStorage.getItem("liquidMode") === "normal") {
         document.body.classList.add("normal-mode");
-        elements.menuLiquid.innerHTML = '<i class="fas fa-magic" aria-hidden="true"></i><span>Đang hiển thị giao diện thường</span>';
+        elements.menuLiquid.innerHTML = '<i class="fas fa-magic" aria-hidden="true"></i><span>Đang hiển thị Liquid Glass</span>';
     } else {
         document.body.classList.remove("normal-mode");
-        elements.menuLiquid.innerHTML = '<i class="fas fa-magic" aria-hidden="true"></i><span>Đang hiển thị Liquid Glass</span>';
+        elements.menuLiquid.innerHTML = '<i class="fas fa-magic" aria-hidden="true"></i><span>Đang hiển thị giao diện thường</span>';
     }
 }
 
