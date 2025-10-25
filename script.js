@@ -1073,20 +1073,21 @@ function showNotification(message) {
 
 // Event listeners - Tối ưu
 function initEventListeners() {
-// Handle show full TKB button - Hiển thị trong modal
-elements.showFullBtn.addEventListener("click", function() {
-    const isExpanded = this.getAttribute("aria-expanded") === "true";
-    this.setAttribute("aria-expanded", !isExpanded);
-    
-    if (isExpanded) {
-        // Nếu modal đang mở, đóng nó và đặt lại trạng thái nút
-        closeTkbFullPopup();
-        return;
-    }
+    // Handle show full TKB button - Hiển thị trong modal
+    elements.showFullBtn.addEventListener("click", function() {
+        const isExpanded = this.getAttribute("aria-expanded") === "true";
+        this.setAttribute("aria-expanded", !isExpanded);
+        
+        if (isExpanded) {
+            // Nếu modal đang mở, đóng nó và đặt lại trạng thái nút
+            closeTkbFullPopup();
+            return;
+        }
 
-    // Hiển thị modal TKB Full
-    showTkbFullPopup();
-});
+        // Hiển thị modal TKB Full
+        showTkbFullPopup();
+    });
+    
     // Thêm sự kiện đóng modal TKB Full
     elements.tkbFullClose.addEventListener("click", closeTkbFullPopup);
     
