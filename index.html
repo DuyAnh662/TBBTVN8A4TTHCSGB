@@ -39,6 +39,9 @@
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-spinner"></div>
         <div class="loading-text">Đang tải bảng thông báo...</div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
     </div>
 
     <!-- Màn hình loading khi chuyển chủ đề -->
@@ -52,34 +55,34 @@
 
     <!-- MENU -->
     <nav class="menu" aria-label="Menu chính">
-        <button class="menu-btn liquid-effect" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">
-            <span class="menu-icon"><i class="fas fa-bars"></i></span>
-            <span class="menu-text">Menu</span>
+        <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+            <span>Menu</span>
         </button>
         <div class="menu-panel" id="menuPanel" role="menu" aria-hidden="true">
-            <button id="menuDark" role="menuitem">
-                <span class="menu-item-icon"><i class="fas fa-moon"></i></span>
-                <span class="menu-item-text">Chuyển Dark/Light</span>
+            <button id="menuDark" role="menuitem" aria-label="Chuyển Dark/Light">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+                <span>Dark Mode</span>
             </button>
-            <button id="menuLiquid" role="menuitem">
-                <span class="menu-item-icon"><i class="fas fa-magic"></i></span>
-                <span class="menu-item-text">Chuyển Liquid Glass/Thường</span>
+            <button id="menuLiquid" role="menuitem" aria-label="Chuyển Liquid Glass/Thường">
+                <i class="fas fa-magic" aria-hidden="true"></i>
+                <span>Liquid Glass</span>
             </button>
-            <button id="menuPopup" role="menuitem">
-                <span class="menu-item-icon"><i class="fas fa-info-circle"></i></span>
-                <span class="menu-item-text">Bật bảng Lưu ý</span>
+            <button id="menuPopup" role="menuitem" aria-label="Bật bảng Lưu ý">
+                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                <span>Bật bảng Lưu ý</span>
             </button>
-            <button id="menuAutoRefresh" role="menuitem">
-                <span class="menu-item-icon"><i class="fas fa-sync-alt"></i></span>
-                <span class="menu-item-text">Bật làm mới tự động</span>
+            <button id="menuAutoRefresh" role="menuitem" aria-label="Bật làm mới tự động">
+                <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                <span>Bật làm mới tự động</span>
             </button>
             <a href="Donate.html" target="_blank" class="donate-btn" role="menuitem">
-                <span class="menu-item-icon"><i class="fas fa-heart"></i></span>
-                <span class="menu-item-text">Donate to us</span>
+                <i class="fas fa-heart" aria-hidden="true"></i>
+                <span>Donate to us</span>
             </a>
             <a href="Report.html" class="report-link" role="menuitem">
-                <span class="menu-item-icon"><i class="fas fa-bug"></i></span>
-                <span class="menu-item-text">Report</span>
+                <i class="fas fa-bug" aria-hidden="true"></i>
+                <span>Report</span>
             </a>
 
             <!-- Tùy chọn màu chủ đề -->
@@ -99,24 +102,24 @@
         </div>
     </nav>
     
-    <button id="refreshBtn" class="refresh-btn" title="Làm mới dữ liệu">
-        <i class="fas fa-sync-alt"></i>
+    <button id="refreshBtn" class="refresh-btn" title="Làm mới dữ liệu" aria-label="Làm mới dữ liệu">
+        <i class="fas fa-sync-alt" aria-hidden="true"></i>
     </button>
     
     <!-- Tab Navigation Fixed Bottom Left -->
     <div class="tab-navigation-fixed" id="tabNavigationFixed">
         <div class="tab-container-fixed">
-            <button class="tab-btn-fixed active liquid-effect" data-tab="btvn" aria-selected="true" aria-controls="btvn-panel">
-                <span class="tab-icon"><i class="fas fa-tasks"></i></span>
-                <span class="tab-text">BTVN</span>
+            <button class="tab-btn-fixed active" data-tab="btvn" aria-selected="true" aria-controls="btvn-panel">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                <span>BTVN</span>
             </button>
-            <button class="tab-btn-fixed liquid-effect" data-tab="tkb" aria-selected="false" aria-controls="tkb-panel">
-                <span class="tab-icon"><i class="fas fa-calendar-alt"></i></span>
-                <span class="tab-text">TKB</span>
+            <button class="tab-btn-fixed" data-tab="tkb" aria-selected="false" aria-controls="tkb-panel">
+                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                <span>TKB</span>
             </button>
-            <button class="tab-btn-fixed liquid-effect" data-tab="changelog" aria-selected="false" aria-controls="changelog-panel">
-                <span class="tab-icon"><i class="fas fa-history"></i></span>
-                <span class="tab-text">Thay đổi</span>
+            <button class="tab-btn-fixed" data-tab="changelog" aria-selected="false" aria-controls="changelog-panel">
+                <i class="fas fa-history" aria-hidden="true"></i>
+                <span>Thay đổi</span>
             </button>
         </div>
         <div class="tab-indicator-fixed"></div>
@@ -124,74 +127,87 @@
 
     <!-- Nút mở rộng khi tab bị thu gọn -->
     <button class="tab-expand-btn" id="tabExpandBtn" aria-label="Mở rộng tab">
-        <i class="fas fa-ellipsis-h"></i>
+        <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
     </button>
 
     <!-- POPUP -->
     <div class="popup" id="popup" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
         <div class="popup-card" id="popupCard">
-            <div class="close" id="popupClose" title="Đóng" aria-label="Đóng popup">
-                <i class="fas fa-times"></i>
-            </div>
-            <h3 id="popupTitle"><i class="fas fa-info-circle"></i> Lưu ý [Nên xem qua trang status]</h3>
+            <button class="close" id="popupClose" aria-label="Đóng popup">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+            <h3 id="popupTitle"><i class="fas fa-info-circle" aria-hidden="true"></i> Lưu ý [Nên xem qua trang status]</h3>
             
             <div class="popup-changelog">
                 <div class="changelog-header">
-                    <span class="changelog-icon"><i class="fas fa-clipboard-list"></i></span>
-                    <span class="changelog-version">Vui lòng xem trên status</span>
+                    <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+                    <span>Vui lòng xem trên status</span>
                 </div>
                 
                 <div class="changelog-content">
                     <div class="change-category">
                         <div class="category-title">
-                            <span class="category-icon"><i class="fas fa-rocket"></i></span>
+                            <i class="fas fa-rocket" aria-hidden="true"></i>
                             <span>Tính năng mới</span>
                         </div>
                         <ul class="change-list">
-                            <li class="change-item">Hiện tại không có!</li>
+                            <li>Hiện tại không có!</li>
                         </ul>
                     </div>
 
                     <div class="change-category">
                         <div class="category-title">
-                            <span class="category-icon"><i class="fas fa-sync-alt"></i></span>
+                            <i class="fas fa-sync-alt" aria-hidden="true"></i>
                             <span>Thay đổi lớn</span>
                         </div>
                         <ul class="change-list">
-                            <li class="change-item">Phương thức update mới!</li>
+                            <li>Phương thức update mới!</li>
                         </ul>
                     </div>
                     <div class="change-category">
                         <div class="category-title">
-                            <span class="category-icon"><i class="fas fa-tools"></i></span>
+                            <i class="fas fa-tools" aria-hidden="true"></i>
                             <span>Cải tiến & Sửa lỗi</span>
-                    </div>
+                        </div>
                         <ul class="change-list">
-                        <li class="change-item">Phân tích, sửa chữa và cải tiến thêm nhiều thứ khác</li>
+                            <li>Phân tích, sửa chữa và cải tiến thêm nhiều thứ khác</li>
                         </ul>
                     </div>
                     <div class="change-category">
                         <div class="category-title">
-                            <span class="category-icon"><i class="fas fa-tools"></i></span>
+                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
                             <span>❗Lưu ý❗</span>
                         </div>
                         <ul class="change-list">
-                            <li class="change-item">Muốn báo lỗi hoặc góp ý vui lòng nhập bấm nút menu rồi bấm report nhập thông tin bạn muốn báo/góp ý</li>
-                            <li class="change-item">Thường hoạt động: 11h50 – 13h00; 17h00 – 20h45</li>
-                            <li class="change-item">Thông tin có thể chưa chính xác, vui lòng kiểm tra lại</li>
-                            <li class="change-item">Mục đích: tốt cho mọi người → nếu sai sót xin báo lại, không chửi tục</li>
-                            <li class="change-item">Bạn đọc hay không là quyền của bạn, không vừa ý vui lòng tìm nguồn khác</li>
-                            <li class="change-item">Sách không ghi cách diều hay kết nối chi thức thì nặc định nó là kết nối chi thức</li>
+                            <li>Muốn báo lỗi hoặc góp ý vui lòng nhập bấm nút menu rồi bấm report nhập thông tin bạn muốn báo/góp ý</li>
+                            <li>Thường hoạt động: 11h50 – 13h00; 17h00 – 20h45</li>
+                            <li>Thông tin có thể chưa chính xác, vui lòng kiểm tra lại</li>
+                            <li>Mục đích: tốt cho mọi người → nếu sai sót xin báo lại, không chửi tục</li>
+                            <li>Bạn đọc hay không là quyền của bạn, không vừa ý vui lòng tìm nguồn khác</li>
+                            <li>Sách không ghi cách diều hay kết nối chi thức thì nặc định nó là kết nối chi thức</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <div class="dev-info">
-                <i class="fas fa-code"></i> Được làm ra và phát triển bởi ChatGBT(WEB), Z AI(WEB), Gemini(WEB), Vũ Duy Anh(WEB&Dữ liệu), Nguyễn Văn Hoàng Bách(Dữ liệu), Hoàng Công Dương(Dữ liệu)
+                <i class="fas fa-code" aria-hidden="true"></i> Được làm ra và phát triển bởi ChatGBT(WEB), Z AI(WEB), Gemini(WEB), Vũ Duy Anh(WEB&Dữ liệu), Nguyễn Văn Hoàng Bách(Dữ liệu), Hoàng Công Dương(Dữ liệu)
             </div>
             <div class="donate-cta">
-                <i class="fas fa-heart"></i> Donate chúng tôi nhé!^_^
+                <i class="fas fa-heart" aria-hidden="true"></i> Donate chúng tôi nhé!^_^
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal TKB Full -->
+    <div class="popup" id="tkbFullPopup" role="dialog" aria-modal="true" aria-labelledby="tkbFullTitle">
+        <div class="popup-card tkb-full-card" id="tkbFullCard">
+            <button class="close" id="tkbFullClose" aria-label="Đóng popup TKB">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+            <h3 id="tkbFullTitle"><i class="fas fa-calendar-week" aria-hidden="true"></i> Thời khóa biểu cả tuần</h3>
+            <div id="tkbFullContent" class="tkb-full-content">
+                <!-- Nội dung TKB full sẽ được thêm vào đây -->
             </div>
         </div>
     </div>
@@ -202,20 +218,21 @@
         <div class="tab-content">
             <!-- BTVN Panel -->
             <div id="btvn-panel" class="tab-panel active">
-                <div class="card liquid-effect">
+                <div class="card">
                     <h1 class="fade-in-text"><i class="fas fa-bullhorn"></i> Thông báo BTVN</h1>
                     <div id="btvnContainer" aria-live="polite">Đang tải dữ liệu...</div>
-                    <div id="noticesContainer" class="note animate-item" style="display:none;" aria-live="polite"></div>
+                    <div id="noticesContainer" class="note animate-item" aria-live="polite" style="display:none;"></div>
                 </div>
             </div>
             
             <!-- TKB Panel -->
             <div id="tkb-panel" class="tab-panel">
-                <div class="card half liquid-effect" id="tkbCard">
+                <div class="card half" id="tkbCard">
                     <h2 class="animate-item"><i class="fas fa-calendar-alt"></i> Thời khóa biểu</h2>
                     <div id="tkbContainer" class="animate-item" aria-live="polite">Đang tải dữ liệu...</div>
-                    <button id="showFullBtn" class="animate-item" aria-expanded="false" aria-controls="fullTKB">
-                        <i class="fas fa-calendar-week"></i> Xem toàn bộ TKB
+                    <button id="showFullBtn" class="animate-item liquid-effect" aria-expanded="false" aria-controls="fullTKB">
+                        <i class="fas fa-calendar-week" aria-hidden="true"></i>
+                        <span>Xem toàn bộ TKB</span>
                     </button>
                     <div id="fullTKB" style="display:none; margin-top:14px;" aria-hidden="true"></div>
                 </div>
@@ -223,7 +240,7 @@
             
             <!-- Changelog Panel -->
             <div id="changelog-panel" class="tab-panel">
-                <div class="card liquid-effect">
+                <div class="card">
                     <h2 class="animate-item"><i class="fas fa-history"></i> Nhật ký thay đổi</h2>
                     <div id="changelogContainer" class="animate-item" aria-live="polite">Đang tải dữ liệu...</div>
                 </div>
