@@ -2,7 +2,7 @@
 
 // Constants
 const API_URL = "https://script.google.com/macros/s/AKfycbw5sjUwJfwRtKBQQu5FgYrmgSjoQ22vvnmlv99H7YJHTVgVZRXm1vWB7fFJg8B2O2M7/exec";
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_jnFFS0Adq6yBqm5VQHjy2Ap59kqFclYDiJlHYkEwmvV21QQZzp-ZvJ27xumt3IDR/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEVbGj72KB2zZQbrTaqWqEGAVVirGBuel-NjOlKgq230fdOx31ciN0783sO1EQTq16/exec";
 
 // Default data
 const defaultData = {
@@ -584,13 +584,23 @@ const SUBJECT_LIST = [
 ];
 
 function ensureAllSubjects(btvnArray) {
-  const map = {};
-  btvnArray.forEach(item => { map[item.subject] = item; });
-
-  return SUBJECT_LIST.map(sub => {
-    if (map[sub]) return map[sub];
-    return { subject: sub, content: "(Chưa có bài tập)", date: "", note: "" };
+  // Nhóm theo môn, giữ tất cả nội dung trùng môn
+  const grouped = {};
+  btvnArray.forEach(item => {
+    const subject = item.subject?.trim() || "Khác";
+    if (!grouped[subject]) grouped[subject] = [];
+    grouped[subject].push(item);
   });
+
+  // Duyệt qua danh sách môn chuẩn, thêm môn còn thiếu
+  SUBJECT_LIST.forEach(sub => {
+    if (!grouped[sub]) {
+      grouped[sub] = [{ subject: sub, content: "(Chưa có bài tập)", date: "", note: "" }];
+    }
+  });
+
+  // Gộp lại thành mảng phẳng (flatten)
+  return Object.values(grouped).flat();
 }
 
 async function fetchData() {
@@ -624,25 +634,53 @@ async function fetchData() {
 // Render functions - Tối ưu
 function renderBTVN(data) {
     const container = elements.btvnContainer;
-    
     const btvnData = data?.btvn ?? [];
-    
+
     if (!btvnData.length) {
         container.innerHTML = "<p>Chưa có bài tập.</p>";
         return;
     }
 
-    // Group by subject
+    // Nhóm bài tập theo môn học
     const subjects = btvnData.reduce((acc, item) => {
-        if (!acc[item.subject]) {
-            acc[item.subject] = [];
-        }
+        if (!acc[item.subject]) acc[item.subject] = [];
         acc[item.subject].push(item);
         return acc;
     }, {});
 
-    // Generate HTML - ĐÃ SỬA LỖI
-    const html = Object.entries(subjects).map(([subject, items]) => {
+    // Thứ tự hiển thị cố định
+    const SUBJECT_ORDER = [
+        "Toán - Đại số",
+        "Toán - Hình học",
+        "Ngữ văn",
+        "Tiếng Anh",
+        "Vật lý",
+        "Hóa học",
+        "Sinh học",
+        "Lịch sử",
+        "Địa lí",
+        "GDCD",
+        "Tin học",
+        "Công nghệ",
+        "GDTC",
+        "GDĐP",
+        "Mĩ thuật",
+        "Âm nhạc",
+        "HĐTN"
+    ];
+
+    // Sắp xếp các môn theo thứ tự định sẵn
+    const subjectEntries = Object.entries(subjects).sort((a, b) => {
+        const ia = SUBJECT_ORDER.indexOf(a[0]);
+        const ib = SUBJECT_ORDER.indexOf(b[0]);
+        if (ia === -1 && ib === -1) return a[0].localeCompare(b[0]);
+        if (ia === -1) return 1;
+        if (ib === -1) return -1;
+        return ia - ib;
+    });
+
+    // Tạo HTML theo thứ tự sắp xếp
+    const html = subjectEntries.map(([subject, items]) => {
         const itemsHtml = items.map(item => `<li class="scroll-fade">${item.content}</li>`).join('');
         return `
             <h2 class="animate-item scroll-fade">${getSubjectIcon(subject)} ${subject}</h2>
@@ -651,8 +689,8 @@ function renderBTVN(data) {
     }).join('');
 
     container.innerHTML = html;
-    
-    // Khởi tạo hiệu ứng scroll fade cho các phần tử mới
+
+    // Hiệu ứng xuất hiện khi cuộn
     setTimeout(() => {
         const scrollElements = container.querySelectorAll('.scroll-fade');
         const observer = new IntersectionObserver(entries => {
@@ -663,11 +701,9 @@ function renderBTVN(data) {
                 }
             });
         }, { threshold: 0.15 });
-
         scrollElements.forEach(el => observer.observe(el));
     }, 100);
 }
-
 function renderTKB(data) {
     const container = elements.tkbContainer;
     if (!data?.tkb) {
@@ -873,29 +909,37 @@ function getSubjectIcon(subject) {
     return icons[subject] || '📚';
 }
 
-// Load all data - Tối ưu
+// Load all data - Đã fix lỗi BTVN không hiển thị đủ
 async function loadAllData() {
     const data = await fetchData();
-    if (data) {
+
+    // Kiểm tra dữ liệu trả về có nằm trong data.result không
+    const result = data?.result || data || {};
+
+    // Ghi log ra console để kiểm tra cấu trúc thật
+    console.log("== RAW DATA NHẬN TỪ GOOGLE APP SCRIPT ==", data);
+    console.log("== DỮ LIỆU BTVN NHẬN VỀ ==", result.btvn);
+
+    if (result) {
         // Update global state
         state.currentData = {
-            tkb: data.tkb || defaultData.tkb,
-            truc: data.truc || defaultData.truc,
-            btvn: data.btvn || [],
-            changelog: data.changelog || [],
-            notices: data.notices || []
+            tkb: result.tkb || defaultData.tkb,
+            truc: result.truc || defaultData.truc,
+            btvn: result.btvn || [],
+            changelog: result.changelog || [],
+            notices: result.notices || []
         };
-        
-        // Save data for comparison
+
+        // Save snapshot for diff
         state.lastData = JSON.parse(JSON.stringify(state.currentData));
-        
-        // Render data
+
+        // Render toàn bộ
         renderBTVN(state.currentData);
         renderTKB(state.currentData);
         renderChangelog(state.currentData);
         renderNotices(state.currentData);
     } else {
-        // Use default data if API fails
+        // Fallback khi API lỗi
         state.currentData = {
             tkb: defaultData.tkb,
             truc: defaultData.truc,
@@ -903,18 +947,15 @@ async function loadAllData() {
             changelog: [],
             notices: []
         };
-        
-        // Save data for comparison
+
         state.lastData = JSON.parse(JSON.stringify(state.currentData));
-        
-        // Render data
+
         renderBTVN(state.currentData);
         renderTKB(state.currentData);
         renderChangelog(state.currentData);
         renderNotices(state.currentData);
     }
 }
-
 // Render today's TKB
 async function renderTodayTKB() {
     renderTKB(state.currentData);
